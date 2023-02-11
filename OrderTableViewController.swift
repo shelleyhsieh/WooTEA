@@ -9,7 +9,6 @@ import UIKit
 
 class OrderTableViewController: UITableViewController {
     
-    let urlStr = "https://api.airtable.com/v0/appPjWNJvMilEx1Cz/Order"
     var menuDatas: Record!
     var orderData = [OrderData.Record]()
     
@@ -35,7 +34,6 @@ class OrderTableViewController: UITableViewController {
     var sugar:String = ""
     var topping:String = ""
     var size:String = ""
-    
     var totalPrice: Int = 0
     var numberOfCup = 1
     
@@ -104,13 +102,10 @@ class OrderTableViewController: UITableViewController {
             
         }
     }
+    //MARK: - confirmView
     
     // 加入訂單
     @IBAction func submitOrder(_ sender: UIButton) {
-        let id = createdID()
-        let fieldData = OrderData.Record.Fields(buyer: orderName, drinkName: menuDatas.fields.name, size: size, sugar: sugar, temperature: temp, toppings: topping, pricePerCup: totalPrice, numberOfCups: numberOfCup, createdID: id)
-        let recordData = OrderData.Record(id: id, fields: fieldData)
-        let orderData = OrderData(records: [recordData])
         
         if orderNameTextField.text?.isEmpty == true {
             showAlert(title: "提醒", message: "請輸入訂購人姓名")
@@ -124,11 +119,45 @@ class OrderTableViewController: UITableViewController {
             showAlert(title: "提醒", message: "請選擇飲品大小")
         } else {
             confirmOrder { _ in
-                MenuController.shared.uploadData(urlStr: self.urlStr, data: orderData)
-                
+                self.uploadData()//上傳訂單 array
+//                MenuController.shared.order.orders.append(recordData) //上傳詳細訂單 dictionary
                 self.navigationController?.popViewController(animated: true)  //加入訂單完回到首頁
             }
         }
+    }
+    
+    // 上傳資料 https://api.airtable.com/v0/{baseId}/{tableIdOrName}
+    // https://api.airtable.com/v0/appPjWNJvMilEx1Cz/Order
+    
+    func uploadData() {
+        let urlStr = "https://api.airtable.com/v0/appPjWNJvMilEx1Cz/Order"
+        let url = URL(string: urlStr)
+        var request = URLRequest(url: url!)
+        request.httpMethod = "POST"
+        request.setValue("Bearer keyy7QrfYj3mhT9pM", forHTTPHeaderField: "Authorization")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        let id = createdID()
+        let confirmOrder = OrderData.Record.Fields(buyer: orderName, drinkName: menuDatas.fields.name, size: size, sugar: sugar, temperature: temp, toppings: topping, pricePerCup: totalPrice, numberOfCups: numberOfCup, createdID: id)
+        let encoder = JSONEncoder()
+        request.httpBody = try? encoder.encode(confirmOrder)
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let data = data {
+                do {
+                    let decoder = JSONDecoder()
+                    let order = try decoder.decode(OrderData.self, from: data)
+                    let content = String(data: data, encoding: .utf8)
+                    print(order)
+                    print("✏️\(content ?? "")")
+                } catch {
+                    print(error)
+                    print("😡\(error.localizedDescription)")
+                    
+                }
+            }
+        }.resume()
+        
     }
     
     //下單時間作為訂單ID
@@ -154,6 +183,7 @@ class OrderTableViewController: UITableViewController {
         alert.addAction(UIAlertAction(title: "取消", style: .cancel, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
+    
     
     
     

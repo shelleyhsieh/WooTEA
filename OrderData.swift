@@ -12,7 +12,7 @@ struct OrderData: Codable {
     var records: [Record]
 
     struct Record: Codable {
-        var id: String
+        var id: String?
         var fields: Fields
         
         struct Fields: Codable {
@@ -26,20 +26,20 @@ struct OrderData: Codable {
             var numberOfCups: Int
             var createdID: String
         }
-        
     }
+    
 }
 
 
 // 記錄
-//struct Order: Codable {
-//    var orders: [OrderData.Record]
-//    
-//    init(orders: [OrderData.Record] = []) {
-//        self.orders = orders
-//    }
-//    
-//}
+struct Order: Codable {
+    var orders: [OrderData.Record]
+    
+    init(orders: [OrderData.Record] = []) {
+        self.orders = orders
+    }
+    
+}
 
 //// 下載
 //struct OrderList: Codable {

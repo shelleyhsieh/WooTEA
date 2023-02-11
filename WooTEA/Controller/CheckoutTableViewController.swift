@@ -11,12 +11,14 @@ class CheckoutTableViewController: UITableViewController {
 
     let urlStr = "https://api.airtable.com/v0/appPjWNJvMilEx1Cz/Order?sort[][field]=createdID"
     var orderList = [OrderData.Record]()
+
+   
     var deleteID = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-//        NotificationCenter.default.addObserver(tableView!, selector: #selector(UITableView.reloadData), name: MenuController.orderUpdateNotification, object: nil)
+        NotificationCenter.default.addObserver(tableView!, selector: #selector(UITableView.reloadData), name: MenuController.orderUpdateNotification, object: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -30,7 +32,7 @@ class CheckoutTableViewController: UITableViewController {
         }
     }
 // MARK: - fetch orderList 
-    func updateUI(with orderList: [OrderData]) {
+    func updateUI(with orderList: [OrderData.Record]) {
         DispatchQueue.main.async {
             self.orderList = orderList
             self.tableView.reloadData()
