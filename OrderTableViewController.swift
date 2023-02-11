@@ -137,8 +137,13 @@ class OrderTableViewController: UITableViewController {
         request.setValue("Bearer keyy7QrfYj3mhT9pM", forHTTPHeaderField: "Authorization")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
+        let parameters = "{\n  \"records\": [\n    {\n      \"fields\": {\n        \"buyer\": \"apple\",\n        \"drinkName\": \"經典五桐茶\",\n        \"size\": \"L\",\n        \"sugar\": \"無糖\",\n        \"temperature\": \"去冰\",\n        \"toppings\": \"綠茶凍\",\n        \"pricePerCup\": 40,\n        \"numberOfCups\": 1\n      }\n    },\n    {\n      \"fields\": {\n        \"buyer\": \"apple\",\n        \"drinkName\": \"經典五桐茶\",\n        \"size\": \"L\",\n        \"sugar\": \"無糖\",\n        \"temperature\": \"去冰\",\n        \"toppings\": \"綠茶凍\",\n        \"pricePerCup\": 40,\n        \"numberOfCups\": 1\n      }\n    }\n  ]\n}"
+        let postData = parameters.data(using: .utf8)
+        
         let id = createdID()
-        let confirmOrder = OrderData.Record.Fields(buyer: orderName, drinkName: menuDatas.fields.name, size: size, sugar: sugar, temperature: temp, toppings: topping, pricePerCup: totalPrice, numberOfCups: numberOfCup, createdID: id)
+        let confirmOrder = orderData
+                                             
+        let orderData = OrderData(records: confirmOrder)
         let encoder = JSONEncoder()
         request.httpBody = try? encoder.encode(confirmOrder)
         
@@ -151,8 +156,7 @@ class OrderTableViewController: UITableViewController {
                     print(order)
                     print("✏️\(content ?? "")")
                 } catch {
-                    print(error)
-                    print("😡\(error.localizedDescription)")
+                    print("😡\(error)")
                     
                 }
             }
