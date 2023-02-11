@@ -108,8 +108,8 @@ class OrderTableViewController: UITableViewController {
     // 加入訂單
     @IBAction func submitOrder(_ sender: UIButton) {
         let id = createdID()
-        let fieldData = OrderData.Fields(buyer: orderName, drinkName: menuDatas.fields.name, size: size, sugar: sugar, temperature: temp, toppings: topping, pricePerCup: totalPrice, numberOfCups: numberOfCup, createdID: id)
-        let recordData = OrderData.Record(fields: fieldData)
+        let fieldData = OrderData.Record.Fields(buyer: orderName, drinkName: menuDatas.fields.name, size: size, sugar: sugar, temperature: temp, toppings: topping, pricePerCup: totalPrice, numberOfCups: numberOfCup, createdID: id)
+        let recordData = OrderData.Record(id: id, fields: fieldData)
         let orderData = OrderData(records: [recordData])
         
         if orderNameTextField.text?.isEmpty == true {
@@ -125,8 +125,8 @@ class OrderTableViewController: UITableViewController {
         } else {
             confirmOrder { _ in
                 MenuController.shared.uploadData(urlStr: self.urlStr, data: orderData)
-                MenuController.shared.order.orders.append(recordData)
-                self.navigationController?.popViewController(animated: true)
+                
+                self.navigationController?.popViewController(animated: true)  //加入訂單完回到首頁
             }
         }
     }

@@ -7,22 +7,22 @@
 
 import Foundation
 
-struct DrinkMenu: Equatable {
-    let name: String
-    let priceM: Int?
-    let priceL: Int?
-    let iceOnly: Bool
-    let description: String?
-    let category: String
-
-}
-
-var allDrinks: [DrinkMenu] = []
-
-struct DrinkCategory {
-    let name: String
-    var menu: [DrinkMenu]
-}
+//struct DrinkMenu: Equatable {
+//    let name: String
+//    let priceM: Int?
+//    let priceL: Int?
+//    let iceOnly: Bool
+//    let description: String?
+//    let category: String
+//
+//}
+//
+//var allDrinks: [DrinkMenu] = []
+//
+//struct DrinkCategory {
+//    let name: String
+//    var menu: [DrinkMenu]
+//}
 
 // get json decode
 struct DrinkData: Codable {

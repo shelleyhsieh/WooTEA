@@ -14,11 +14,12 @@ class MenuController {
     static let shared = MenuController()
     
     static let orderUpdateNotification = Notification.Name("MenuController.orderUpdate")
-    var order = Order() {
-        didSet {
-            NotificationCenter.default.post(name: MenuController.orderUpdateNotification, object: nil)
-        }
-    }
+    
+//    var order =  {
+//        didSet {
+//            NotificationCenter.default.post(name: MenuController.orderUpdateNotification, object: nil)
+//        }
+//    }
     
     
     // 下載menu  https://api.airtable.com/v0/{baseId}/{tableIdOrName}/{recordId}
@@ -81,21 +82,20 @@ class MenuController {
         
     }
 
-    
-    //更新訂單 https://api.airtable.com/v0/{baseId}/{tableIdOrName}/{recordId}
-    // https://api.airtable.com/v0/appPjWNJvMilEx1Cz/Order
-    func fetchOrderData(urlStr:String, completion: @escaping(Result<[OrderList.Record], Error>) -> Void) {
+    //重新抓取訂單
+    func fetchOrderData(urlStr:String, completion: @escaping(Result< [OrderData], Error >) -> Void) {
         let url = URL(string: urlStr)
         var request = URLRequest(url: url!)
-//        request.httpMethod = "PATCH"
+
         request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let data = data {
                 do {
                     let decoder = JSONDecoder()
-                    let renewOrder = try decoder.decode(OrderList.self, from: data)
-                    completion(.success(renewOrder.records))
+                    let renewOrder = try decoder.decode([OrderData].self, from: data)
+                    print(renewOrder)
+                    completion(.success(renewOrder.self))
                 } catch  {
                     print("解碼失敗")
                     completion(.failure(error))
@@ -114,21 +114,24 @@ class MenuController {
     // 刪除訂單 https://api.airtable.com/v0/{baseId}/{tableIdOrName}/{recordId}
     // https://api.airtable.com/v0/appPjWNJvMilEx1Cz/Order/createdID
     func deleteOrderData(urlStr: String) {
-        let url = URL(string: urlStr)
+        
+        let url = URL(string: urlStr) 
         var request = URLRequest(url: url!)
         request.httpMethod = "DELETE"
         request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
         
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let data = data {
+                let status = String(data: data, encoding: .utf8)
+                print(status)
                 do {
                     let decoder = JSONDecoder()
-                    let orderList = try decoder.decode(OrderList.self, from: data)
+                    let orderList = try decoder.decode(OrderData.Record.self, from: data)
                     print(orderList)
                 } catch  {
                     print(error)
                 }
-              
+            
             }
             if let httpResponse = response as? HTTPURLResponse, error == nil {
                 print("HTTP response status code: \(httpResponse.statusCode)")

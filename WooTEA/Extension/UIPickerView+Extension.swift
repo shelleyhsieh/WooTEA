@@ -14,7 +14,7 @@ extension OrderTableViewController: UIPickerViewDelegate, UIPickerViewDataSource
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         1
     }
-    //每個項目中有多少資料
+    //設定顯示的資料數量
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         switch pickerView.tag {
         case 0:
@@ -24,7 +24,7 @@ extension OrderTableViewController: UIPickerViewDelegate, UIPickerViewDataSource
             return iceOnly.count
         case 2:
             return Topping.allCases.count
-        case 3:
+        default:
             //只有中杯
             if drinkNameLable.text == "最完美手沖泰奶, 綠茶凍手沖泰奶, 珍珠手沖泰奶" {
                 return 0
@@ -34,8 +34,6 @@ extension OrderTableViewController: UIPickerViewDelegate, UIPickerViewDataSource
             } else {
                 return Size.allCases.count
             }
-        default:
-            return 0
         }
     }
     
@@ -49,7 +47,7 @@ extension OrderTableViewController: UIPickerViewDelegate, UIPickerViewDataSource
             return iceOnly[row]
         case 2:
             return Topping.allCases[row].rawValue
-        case 3:
+        default:
             //只有中杯
             if drinkNameLable.text == "最完美手沖泰奶, 綠茶凍手沖泰奶, 珍珠手沖泰奶" {
                 return Size.allCases[0].rawValue
@@ -58,14 +56,12 @@ extension OrderTableViewController: UIPickerViewDelegate, UIPickerViewDataSource
             } else {
                 return Size.allCases[row].rawValue
             }
-            
-        default:
-            return ""
+        
         }
         
     }
     
-    // 選擇後執行是否增加費用
+    // picker 停止滑動時會呼叫 pickerView(_:didSelectRow:inComponent:),如選擇後執行是否增加費用
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         switch pickerView.tag {
         case 0:
@@ -110,7 +106,7 @@ extension OrderTableViewController: UIPickerViewDelegate, UIPickerViewDataSource
                 }
             }
             
-        case 3:
+            default:
             //只有中杯
             if drinkNameLable.text == "最完美手沖泰奶, 綠茶凍手沖泰奶, 珍珠手沖泰奶" {
                 size = Size.allCases[0].rawValue
@@ -132,8 +128,7 @@ extension OrderTableViewController: UIPickerViewDelegate, UIPickerViewDataSource
                     }
                 }
             }
-        default:
-            return
+    
         }
     }
 }

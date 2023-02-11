@@ -9,12 +9,12 @@ import UIKit
 
 class MenuViewController: UIViewController {
     
-    var drinks:[DrinkMenu] = []
+//    var drinks:[DrinkMenu] = []
     var menuDatas = [Record]()
     let urlStr = "https://api.airtable.com/v0/appPjWNJvMilEx1Cz/Menu?sort[][field]=category"
     
     
-    var categoryArray: [DrinkCategory] = []
+//    var categoryArray: [DrinkCategory] = []
     var currentBtnIndex: Int = 0
     var totalNomberCups: Int = 0
     
@@ -43,7 +43,7 @@ class MenuViewController: UIViewController {
     //MARK: - get menu from airtable
     func updateUI(with menuDatas: [Record]) {
         DispatchQueue.main.async {
-            self.getDrinks(category: "醇茶")
+            
             self.menuDatas = menuDatas
             self.collectionView.reloadData()
         }
@@ -59,25 +59,19 @@ class MenuViewController: UIViewController {
     
     @IBAction func changeDrink(_ sender: UIButton) {
         let category = sender.titleLabel?.text!
-        getDrinks(category: category!)
+//        getDrinks(category: category!)
 
         currentBtnIndex = sender.tag
     }
     
-    func getDrinks(category: String) {
-        drinks = []
-        for drink in allDrinks {
-            if drink.category == category {
-                drinks += [drink]
-            }
-        }
-        collectionView.reloadData()
-    }
-    
-    
-//    @IBSegueAction func showOrderDetail(_ coder: NSCoder) -> OrderTableViewController? {
-//        guard let item = passDrinkMenu else { return nil }
-//        return OrderTableViewController(coder: coder, drinkMenu: item)
+//    func getDrinks(category: String) {
+//        drinks = []
+//        for drink in allDrinks {
+//            if drink.category == category {
+//                drinks += [drink]
+//            }
+//        }
+//        collectionView.reloadData()
 //    }
     
     

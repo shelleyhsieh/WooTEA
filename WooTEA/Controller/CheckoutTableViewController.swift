@@ -10,13 +10,13 @@ import UIKit
 class CheckoutTableViewController: UITableViewController {
 
     let urlStr = "https://api.airtable.com/v0/appPjWNJvMilEx1Cz/Order?sort[][field]=createdID"
-    var orderList = [OrderList.Record]()
+    var orderList = [OrderData.Record]()
     var deleteID = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        NotificationCenter.default.addObserver(tableView!, selector: #selector(UITableView.reloadData), name: MenuController.orderUpdateNotification, object: nil)
+//        NotificationCenter.default.addObserver(tableView!, selector: #selector(UITableView.reloadData), name: MenuController.orderUpdateNotification, object: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -29,12 +29,30 @@ class CheckoutTableViewController: UITableViewController {
             }
         }
     }
-        
-    func updateUI(with orderList: [OrderList.Record]) {
+// MARK: - fetch orderList 
+    func updateUI(with orderList: [OrderData]) {
         DispatchQueue.main.async {
             self.orderList = orderList
             self.tableView.reloadData()
         }
+    }
+    
+    func updateDelete(indexPath: IndexPath) {
+        DispatchQueue.main.async {
+            let deleteID = self.orderList[indexPath.row]
+            MenuController.shared.deleteOrderData(urlStr: "https://api.airtable.com/v0/appPjWNJvMilEx1Cz/Order/\(deleteID.id)")
+            print(deleteID)
+            
+            self.orderList.remove(at: indexPath.row)
+            print(indexPath.row)
+            
+            self.tableView.deleteRows(at: [indexPath], with: .automatic)
+            print(indexPath)
+            
+            self.tableView.reloadData()
+        }
+        
+        
     }
 
     // MARK: - Table view data source
@@ -45,13 +63,13 @@ class CheckoutTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return MenuController.shared.order.orders.count
+        return orderList.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "\(CheckoutTableViewCell.self)", for: indexPath) as! CheckoutTableViewCell
-        let orderData = MenuController.shared.order.orders[indexPath.row]
+        let orderData = orderList[indexPath.row]
         
         cell.orderNameLable.text = orderData.fields.buyer
         cell.drinkNameLable.text = orderData.fields.drinkName
@@ -75,26 +93,20 @@ class CheckoutTableViewController: UITableViewController {
     }
     
 
-    
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
         return true
     }
     
-
     
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             print("Delete")
-
-            let deleteID = orderList[indexPath.row]
-            MenuController.shared.deleteOrderData(urlStr: "https://api.airtable.com/v0/appPjWNJvMilEx1Cz/Order/" + deleteID.id)
-            MenuController.shared.order.orders.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .automatic)
-            tableView.reloadData()
             
+            updateDelete(indexPath: indexPath)
+            print(indexPath)
             
         }           
     }
