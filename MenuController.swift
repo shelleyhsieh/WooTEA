@@ -14,12 +14,11 @@ class MenuController {
     static let shared = MenuController()
     
     static let orderUpdateNotification = Notification.Name("MenuController.orderUpdate")
-    
-//    var order =  {
-//        didSet {
-//            NotificationCenter.default.post(name: MenuController.orderUpdateNotification, object: nil)
-//        }
-//    }
+    var order = Order() {
+        didSet {
+            NotificationCenter.default.post(name: MenuController.orderUpdateNotification, object: nil)
+        }
+    }
     
     
     // 下載menu  https://api.airtable.com/v0/{baseId}/{tableIdOrName}/{recordId}
@@ -34,7 +33,10 @@ class MenuController {
                 do {
                     let decoder = JSONDecoder()
                     let drinkMenu = try decoder.decode(DrinkData.self, from: data)
+                
                     completion(.success(drinkMenu.records))
+                    print("✅ \(drinkMenu.records)")
+                    
                 } catch  {
                     completion(.failure(error))
                 }
@@ -59,31 +61,30 @@ class MenuController {
     // 上傳資料 https://api.airtable.com/v0/{baseId}/{tableIdOrName}
     // https://api.airtable.com/v0/appPjWNJvMilEx1Cz/Order
     
-    func uploadData(urlStr: String, data: OrderData) {
-        let url = URL(string: urlStr)
-        var request = URLRequest(url: url!)
-        request.httpMethod = "POST"
-        request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        let encoder = JSONEncoder()
-        request.httpBody = try? encoder.encode(data)
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            if let data = data {
-                do {
-                    let content = String(data: data, encoding: .utf8)
-                    print(content)
-                    print("上傳成功")
-                } catch  {
-                    print(error)
-                    print("上傳失敗")
-                }
-            }
-        }.resume()
-        
-    }
+//    func uploadData(urlStr: String, data: OrderData) {
+//        let url = URL(string: urlStr)
+//        var request = URLRequest(url: url!)
+//        request.httpMethod = "POST"
+//        request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
+//        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+//        let encoder = JSONEncoder()
+//        request.httpBody = try? encoder.encode(data)
+//        
+//        URLSession.shared.dataTask(with: request) { data, response, error in
+//            if let data = data {
+//                do {
+//                    let content = String(data: data, encoding: .utf8)
+//                    print(content)
+//                } catch  {
+//                    print(error)
+//                }
+//            }
+//        }.resume()
+//        
+//    }
 
     //重新抓取訂單
-    func fetchOrderData(urlStr:String, completion: @escaping(Result< [OrderData], Error >) -> Void) {
+    func fetchOrderData(urlStr:String, completion: @escaping(Result< [OrderData.Record], Error >) -> Void) {
         let url = URL(string: urlStr)
         var request = URLRequest(url: url!)
 
@@ -93,9 +94,9 @@ class MenuController {
             if let data = data {
                 do {
                     let decoder = JSONDecoder()
-                    let renewOrder = try decoder.decode([OrderData].self, from: data)
+                    let renewOrder = try decoder.decode(OrderData.self, from: data)
                     print(renewOrder)
-                    completion(.success(renewOrder.self))
+                    completion(.success(renewOrder.records))
                 } catch  {
                     print("解碼失敗")
                     completion(.failure(error))
@@ -113,32 +114,35 @@ class MenuController {
     
     // 刪除訂單 https://api.airtable.com/v0/{baseId}/{tableIdOrName}/{recordId}
     // https://api.airtable.com/v0/appPjWNJvMilEx1Cz/Order/createdID
-    func deleteOrderData(urlStr: String) {
-        
-        let url = URL(string: urlStr) 
-        var request = URLRequest(url: url!)
-        request.httpMethod = "DELETE"
-        request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
-        
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            if let data = data {
-                let status = String(data: data, encoding: .utf8)
-                print(status)
-                do {
-                    let decoder = JSONDecoder()
-                    let orderList = try decoder.decode(OrderData.Record.self, from: data)
-                    print(orderList)
-                } catch  {
-                    print(error)
-                }
-            
-            }
-            if let httpResponse = response as? HTTPURLResponse, error == nil {
-                print("HTTP response status code: \(httpResponse.statusCode)")
-            }
-        }.resume()
-        
-    }
+//    func deleteOrderData(urlStr: String, completion: @escaping (Result< Bool, Error >) -> Void) {
+//        
+//        let url = URL(string: urlStr) 
+//        var request = URLRequest(url: url!)
+//        request.httpMethod = "DELETE"
+//        request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
+//        
+//        URLSession.shared.dataTask(with: request) { data, response, error in
+//            if let data = data {
+//                let status = String(data: data, encoding: .utf8)
+//                print(status)
+//                do {
+//                    let decoder = JSONDecoder()
+//                    let orderList = try decoder.decode(DeleteOrder.self, from: data)
+//                    print("✅\(orderList)")
+//                    completion(.success(true))
+//                    
+//                } catch  {
+//                    print("🥺\(error.localizedDescription)")
+//                    completion(.failure(error))
+//                }
+//            
+//            }
+//            if let httpResponse = response as? HTTPURLResponse, error == nil {
+//                print("HTTP response status code: \(httpResponse.statusCode)")
+//            }
+//        }.resume()
+//        
+//    }
     
     
 }

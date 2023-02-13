@@ -107,10 +107,6 @@ class OrderTableViewController: UITableViewController {
     
     // 加入訂單
     @IBAction func submitOrder(_ sender: UIButton) {
-        let id = createdID()
-        let fieldData = OrderData.Record.Fields(buyer: orderName, drinkName: menuDatas.fields.name, size: size, sugar: sugar, temperature: temp, toppings: topping, pricePerCup: totalPrice, numberOfCups: numberOfCup, createdID: id)
-        let recordData = OrderData.Record(id: id, fields: fieldData)
-        let orderData = OrderData(records: [recordData])
         
         if orderNameTextField.text?.isEmpty == true {
             showAlert(title: "提醒", message: "請輸入訂購人姓名")
@@ -123,12 +119,46 @@ class OrderTableViewController: UITableViewController {
         } else if sizeTextField.text?.isEmpty == true {
             showAlert(title: "提醒", message: "請選擇飲品大小")
         } else {
-            confirmOrder { _ in
-                MenuController.shared.uploadData(urlStr: self.urlStr, data: orderData)
-                
+            confirmOrder {  _ in
+                self.uploadData()
                 self.navigationController?.popViewController(animated: true)  //加入訂單完回到首頁
             }
         }
+    }
+    
+    func uploadData(){
+        let urlStr = "https://api.airtable.com/v0/appPjWNJvMilEx1Cz/Order"
+        let url = URL(string: urlStr)
+        var request = URLRequest(url: url!)
+        request.httpMethod = "POST"
+        request.setValue("Bearer keyy7QrfYj3mhT9pM", forHTTPHeaderField: "Authorization")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        let id = createdID()
+        let confirmOrder = OrderData.Record.Fields(buyer: orderName, drinkName: menuDatas.fields.name, size: size, sugar: sugar, temperature: temp, toppings: topping, pricePerCup: totalPrice, numberOfCups: numberOfCup, createdID: id)
+        let record = OrderData.Record(id: nil, fields: confirmOrder)
+        let order = OrderData(records: [record])
+        
+        let encoder = JSONEncoder()
+        let encodeData = (try? encoder.encode(order))!
+        let jasonString = String(data: encodeData, encoding: .utf8)
+        let postData = jasonString!.data(using: .utf8)
+        request.httpBody = postData
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let data = data {
+                do {
+                    let decoder = JSONDecoder()
+                    let order = try decoder.decode(OrderData.self, from: data)
+                    let content = String(data: data, encoding: .utf8)
+                    print("🧋\(order)")
+                    print("✅ \(content)")
+                } catch {
+                    print("😡\(error)")
+                }
+            }
+        }.resume()
+        
     }
     
     //下單時間作為訂單ID
@@ -225,3 +255,13 @@ class OrderTableViewController: UITableViewController {
     */
 
 }
+// NSString gives us a nice sanitized debugDescription
+//extension Date {
+//    func PrettyPrintedJasonString() {
+//        guard let object = try? JSONSerialization.jsonObject(with: self, options: []),
+//              let data = try? JSONSerialization.data(withJSONObject: object, options: [.prettyPrinted]),
+//              let prettyPrintedString = String(data: data, encoding: .utf8) else { return }
+//
+//        print(prettyPrintedString)
+//    }
+//}

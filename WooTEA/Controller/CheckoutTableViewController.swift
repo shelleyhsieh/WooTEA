@@ -13,10 +13,14 @@ class CheckoutTableViewController: UITableViewController {
     var orderList = [OrderData.Record]()
     var deleteID = ""
     
+    var id = String()
+    var deleted = Bool()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-//        NotificationCenter.default.addObserver(tableView!, selector: #selector(UITableView.reloadData), name: MenuController.orderUpdateNotification, object: nil)
+        NotificationCenter.default.addObserver(tableView!, selector: #selector(UITableView.reloadData), name: MenuController.orderUpdateNotification, object: nil)
+    
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -30,7 +34,7 @@ class CheckoutTableViewController: UITableViewController {
         }
     }
 // MARK: - fetch orderList 
-    func updateUI(with orderList: [OrderData]) {
+    func updateUI(with orderList: [OrderData.Record]) {
         DispatchQueue.main.async {
             self.orderList = orderList
             self.tableView.reloadData()
@@ -39,8 +43,15 @@ class CheckoutTableViewController: UITableViewController {
     
     func updateDelete(indexPath: IndexPath) {
         DispatchQueue.main.async {
-            let deleteID = self.orderList[indexPath.row]
-            MenuController.shared.deleteOrderData(urlStr: "https://api.airtable.com/v0/appPjWNJvMilEx1Cz/Order/\(deleteID.id)")
+            guard let deleteID = self.orderList[indexPath.row].id else { return }
+            self.deleteOrderData(urlStr: "https://api.airtable.com/v0/appPjWNJvMilEx1Cz/Order/\(deleteID)") { (result) in
+                switch result {
+                case .success(let boolValue):
+                    print("✅delete OK!")
+                case .failure(let error):
+                   print(error)
+                }
+            }
             print(deleteID)
             
             self.orderList.remove(at: indexPath.row)
@@ -51,7 +62,45 @@ class CheckoutTableViewController: UITableViewController {
             
             self.tableView.reloadData()
         }
+    }
+    
+    func deleteOrderData(urlStr: String, completion: @escaping (Result< Bool, Error >) -> Void) {
+       
+        let url = URL(string: urlStr)
+        var request = URLRequest(url: url!)
+        request.httpMethod = "DELETE"
+        request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         
+        let record = DeleteOrder.Record(id: id, deleted: deleted)
+        let deletedOrder = DeleteOrder(records: [record])
+        
+        let encoder = JSONEncoder()
+        let encodeData = try? encoder.encode(deletedOrder)
+        let jsonString = String(data: encodeData!, encoding: .utf8)
+        let postData = jsonString?.data(using: .utf8)
+        request.httpBody = postData
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let data = data {
+                let status = String(data: data, encoding: .utf8)
+                print(status)
+                do {
+                    let decoder = JSONDecoder()
+                    let orderList = try decoder.decode(DeleteOrder.self, from: data)
+                    print("✅\(orderList)")
+                    completion(.success(true))
+                    
+                } catch  {
+                    print("🥺\(error.localizedDescription)")
+                    completion(.failure(error))
+                }
+            
+            }
+            if let httpResponse = response as? HTTPURLResponse, error == nil {
+                print("HTTP response status code: \(httpResponse.statusCode)")
+            }
+        }.resume()
         
     }
 

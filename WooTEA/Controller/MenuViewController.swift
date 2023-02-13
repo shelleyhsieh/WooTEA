@@ -9,14 +9,12 @@ import UIKit
 
 class MenuViewController: UIViewController {
     
-//    var drinks:[DrinkMenu] = []
+    var drinks = [DrinkMenu]()
+    
     var menuDatas = [Record]()
     let urlStr = "https://api.airtable.com/v0/appPjWNJvMilEx1Cz/Menu?sort[][field]=category"
     
-    
-//    var categoryArray: [DrinkCategory] = []
     var currentBtnIndex: Int = 0
-    var totalNomberCups: Int = 0
     
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -38,13 +36,14 @@ class MenuViewController: UIViewController {
         self.collectionView.delegate = self
         
         configureCellSize()
-//        categorizeDrinks()
     }
+    
+    
     //MARK: - get menu from airtable
     func updateUI(with menuDatas: [Record]) {
         DispatchQueue.main.async {
-            
             self.menuDatas = menuDatas
+            self.getDrinks(category: "醇茶")
             self.collectionView.reloadData()
         }
     }
@@ -56,23 +55,23 @@ class MenuViewController: UIViewController {
             self.present(alert, animated: true, completion: nil)
         }
     }
-    
+//    MARK: - category button
     @IBAction func changeDrink(_ sender: UIButton) {
-        let category = sender.titleLabel?.text!
-//        getDrinks(category: category!)
-
+        
+        let category = sender.titleLabel!.text!
+        getDrinks(category: category)
         currentBtnIndex = sender.tag
     }
     
-//    func getDrinks(category: String) {
-//        drinks = []
-//        for drink in allDrinks {
-//            if drink.category == category {
-//                drinks += [drink]
-//            }
-//        }
-//        collectionView.reloadData()
-//    }
+    func getDrinks(category: String) {
+        drinks = []
+        for drink in allDrinks {
+            if drink.category == category {
+                drinks += [drink]
+            }
+        }
+        collectionView.reloadData()
+    }
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -92,9 +91,10 @@ extension MenuViewController: UICollectionViewDelegate, UICollectionViewDataSour
         
         return 1
     }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print(menuDatas.count)
         
+        print(menuDatas.count)
         return menuDatas.count
     }
     
@@ -102,6 +102,7 @@ extension MenuViewController: UICollectionViewDelegate, UICollectionViewDataSour
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "\(MenuCollectionViewCell.self)", for: indexPath) as! MenuCollectionViewCell
         let menuData = menuDatas[indexPath.row]
+        
         cell.nameLable.text = menuData.fields.name
         
         let imageUrl = menuData.fields.image[0].url

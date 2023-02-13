@@ -19,10 +19,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let _ = (scene as? UIWindowScene) else { return }
         
-        //在sceneDelegate中新增接收通知，並在取得通知後去檢查儲存上傳資料的Array有多少資料，並顯示在TabBar上的badgeValue
-        //        NotificationCenter.default.addObserver(self, selector: #selector(updateOrderBadgeValue), name: MenuController.orderUpdateNotification, object: nil)
-        //        listTabBar = (window?.rootViewController as? UITabBarController)?.viewControllers?[1].tabBarItem
-        //    }
+//        在sceneDelegate中新增接收通知，並在取得通知後去檢查儲存上傳資料的Array有多少資料，並顯示在TabBar上的badgeValue
+        NotificationCenter.default.addObserver(self, selector: #selector(updateOrderBadgeValue), name: MenuController.orderUpdateNotification, object: nil)
+        listTabBar = (window?.rootViewController as? UITabBarController)?.viewControllers?[1].tabBarItem
+    }
         
         func sceneDidDisconnect(_ scene: UIScene) {
             // Called as the scene is being released by the system.
@@ -52,16 +52,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             // to restore the scene back to its current state.
         }
         
-        //    @objc func updateOrderBadgeValue () {
-        //        if MenuController.shared.order.orders.count == 0 {
-        //            listTabBar?.badgeValue = nil
-        //        } else {
-        //            listTabBar?.badgeValue = String(MenuController.shared.order.orders.count)
-        //        }
-        //    }
-        
-        
-        
+    @objc func updateOrderBadgeValue () {
+        if MenuController.shared.order.orders.count == 0 {
+            listTabBar?.badgeValue = nil
+        } else {
+            listTabBar?.badgeValue = String(MenuController.shared.order.orders.count)
+        }
     }
+        
+        
+        
+    
 }
 

@@ -25,6 +25,7 @@
 		D941DDE1298FD22400E21BE7 /* MenuCollectionReusableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D941DDE0298FD22400E21BE7 /* MenuCollectionReusableHeaderView.swift */; };
 		D941DDE8298FE3F800E21BE7 /* UITextField+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D941DDE7298FE3F800E21BE7 /* UITextField+Extensions.swift */; };
 		D941DDEA298FE41100E21BE7 /* UIPickerView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D941DDE9298FE41100E21BE7 /* UIPickerView+Extension.swift */; };
+		D988A28F299A465F00724D20 /* DeleteOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D988A28E299A465F00724D20 /* DeleteOrder.swift */; };
 		D9892CD7298D5019002E7277 /* Decode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9892CD6298D5019002E7277 /* Decode.swift */; };
 /* End PBXBuildFile section */
 
@@ -49,6 +50,7 @@
 		D941DDE0298FD22400E21BE7 /* MenuCollectionReusableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuCollectionReusableHeaderView.swift; sourceTree = SOURCE_ROOT; };
 		D941DDE7298FE3F800E21BE7 /* UITextField+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextField+Extensions.swift"; sourceTree = "<group>"; };
 		D941DDE9298FE41100E21BE7 /* UIPickerView+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIPickerView+Extension.swift"; sourceTree = "<group>"; };
+		D988A28E299A465F00724D20 /* DeleteOrder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteOrder.swift; sourceTree = SOURCE_ROOT; };
 		D9892CD6298D5019002E7277 /* Decode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Decode.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -103,6 +105,7 @@
 				D9892CD6298D5019002E7277 /* Decode.swift */,
 				D9104594298A5381008F272D /* DrinkMenu.swift */,
 				D9104596298A53A8008F272D /* OrderData.swift */,
+				D988A28E299A465F00724D20 /* DeleteOrder.swift */,
 				D9104598298A544B008F272D /* Enums.swift */,
 			);
 			path = Model;
@@ -221,6 +224,7 @@
 				D941DDE8298FE3F800E21BE7 /* UITextField+Extensions.swift in Sources */,
 				D90F1455298E8F0900D15EF8 /* MenuController.swift in Sources */,
 				D910456A29890A3D008F272D /* SceneDelegate.swift in Sources */,
+				D988A28F299A465F00724D20 /* DeleteOrder.swift in Sources */,
 				D9892CD7298D5019002E7277 /* Decode.swift in Sources */,
 				D9104584298A4618008F272D /* CheckoutTableViewController.swift in Sources */,
 				D9104593298A48C1008F272D /* CheckoutTableViewCell.swift in Sources */,
