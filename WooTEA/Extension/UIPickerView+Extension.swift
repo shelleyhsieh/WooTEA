@@ -10,30 +10,30 @@ import UIKit
 
 extension OrderTableViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     
-    //顯示每個textField中picker有幾個
+    //顯示每個textField中pickerview顯示數量
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         1
     }
-    //設定顯示的資料數量
+    //設定每一列的選項數量
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         switch pickerView.tag {
         case 0:
-            return Sugar.allCases.count
+            guard self.menuDatas.fields.iceOnly != nil else { return iceOnly.count} //只限冰飲
+            return tempList.count
         case 1:
-            guard self.menuDatas.fields.iceOnly != nil else { return tempList.count}
-            return iceOnly.count
+            return Sugar.allCases.count
         case 2:
-            return Topping.allCases.count
-        default:
-            //只有中杯
+            // 只有中杯
             if drinkNameLable.text == "最完美手沖泰奶, 綠茶凍手沖泰奶, 珍珠手沖泰奶" {
-                return 0
+                return Size.medium.hashValue
                 //只有大杯
             } else if drinkNameLable.text == "杏仁凍五桐茶, 豆漿凍紅茶, 綠茶凍五桐奶茶, 仙草凍奶茶, 綠茶凍五桐茶拿鐵, 仙草凍紅茶拿鐵, 老實人鮮柚綠茶, 蜂蜜鮮柚綠茶, 雪絨草莓奶酪, 雪絨葡萄果粒, 葡萄冰茶凍飲" {
-                return 1
+                return Size.large.hashValue
             } else {
                 return Size.allCases.count
             }
+        default:
+            return Topping.allCases.count
         }
     }
     
@@ -41,34 +41,58 @@ extension OrderTableViewController: UIPickerViewDelegate, UIPickerViewDataSource
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         switch pickerView.tag {
         case 0:
-            return Sugar.allCases[row].rawValue
+            guard self.menuDatas.fields.iceOnly != nil else { return iceOnly[row]}
+            return tempList[row]
         case 1:
-            guard self.menuDatas.fields.iceOnly != nil else { return tempList[row]}
-            return iceOnly[row]
+            return Sugar.allCases[row].rawValue
         case 2:
-            return Topping.allCases[row].rawValue
-        default:
             //只有中杯
             if drinkNameLable.text == "最完美手沖泰奶, 綠茶凍手沖泰奶, 珍珠手沖泰奶" {
                 return Size.allCases[0].rawValue
-            }else if drinkNameLable.text == "杏仁凍五桐茶, 豆漿凍紅茶, 綠茶凍五桐奶茶, 仙草凍奶茶, 綠茶凍五桐茶拿鐵, 仙草凍紅茶拿鐵, 老實人鮮柚綠茶, 蜂蜜鮮柚綠茶, 雪絨草莓奶酪, 雪絨葡萄果粒, 葡萄冰茶凍飲" {
+                //只有大杯
+            } else if drinkNameLable.text == "杏仁凍五桐茶, 豆漿凍紅茶, 綠茶凍五桐奶茶, 仙草凍奶茶, 綠茶凍五桐茶拿鐵, 仙草凍紅茶拿鐵, 老實人鮮柚綠茶, 蜂蜜鮮柚綠茶, 雪絨草莓奶酪, 雪絨葡萄果粒, 葡萄冰茶凍飲" {
                 return Size.allCases[1].rawValue
             } else {
                 return Size.allCases[row].rawValue
             }
-        
+        default:
+            return Topping.allCases[row].rawValue
         }
         
     }
     
-    // picker 停止滑動時會呼叫 pickerView(_:didSelectRow:inComponent:),如選擇後執行是否增加費用
+    // picker 停止滑動時會呼叫 pickerView(_:didSelectRow:inComponent:),如選擇後執行是否增加費用，意即選擇後要執行的方法
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         switch pickerView.tag {
         case 0:
-            return sugar = Sugar.allCases[row].rawValue
+            temp = Temperature.allCases[row].rawValue
+//            return temp = Temperature.allCases[row].rawValue
         case 1:
-            return temp = Temperature.allCases[row].rawValue
+            return sugar = Sugar.allCases[row].rawValue
         case 2:
+            //只有中杯
+            if drinkNameLable.text == "最完美手沖泰奶, 綠茶凍手沖泰奶, 珍珠手沖泰奶" {
+                size = Size.allCases[0].rawValue
+                totalPrice = menuDatas.fields.priceM ?? 0
+                submitOrderBtn.configuration?.title = "送出訂單 $ \(totalPrice)"
+            } else if drinkNameLable.text == "杏仁凍五桐茶, 豆漿凍紅茶, 綠茶凍五桐奶茶, 仙草凍奶茶, 綠茶凍五桐茶拿鐵, 仙草凍紅茶拿鐵, 老實人鮮柚綠茶, 蜂蜜鮮柚綠茶, 雪絨草莓奶酪, 雪絨葡萄果粒, 葡萄冰茶凍飲" {  //只有大杯
+                size = Size.allCases[1].rawValue
+                totalPrice = menuDatas.fields.priceL ?? 0
+                submitOrderBtn.configuration?.title = "送出訂單 $ \(totalPrice)"
+            } else {
+                size = Size.allCases[row].rawValue
+                if let medium = menuDatas.fields.priceM {
+                    totalPrice = medium
+                    submitOrderBtn.configuration?.title = "送出訂單 $ \(totalPrice)"
+                } else {
+                    if let large = menuDatas.fields.priceL {
+                        totalPrice = large
+                        submitOrderBtn.configuration?.title = "送出訂單 $ \(totalPrice)"
+                    }
+                }
+            }
+            
+            default:
             topping = Topping.allCases[row].rawValue
             if row == 1 {
                 totalPrice += 5
@@ -96,8 +120,8 @@ extension OrderTableViewController: UIPickerViewDelegate, UIPickerViewDataSource
                 totalPrice += 20
                 submitOrderBtn.configuration?.title = "送出訂單 $ \(totalPrice)"
             } else {
-                if sizeTextField.text == "中杯" {
-                    totalPrice = menuDatas.fields.priceM!
+                if let medium = menuDatas.fields.priceM {
+                    totalPrice = medium
                     submitOrderBtn.configuration?.title = "送出訂單 $ \(totalPrice)"
                 } else {
                     if let large = menuDatas.fields.priceL {
@@ -106,28 +130,6 @@ extension OrderTableViewController: UIPickerViewDelegate, UIPickerViewDataSource
                 }
             }
             
-            default:
-            //只有中杯
-            if drinkNameLable.text == "最完美手沖泰奶, 綠茶凍手沖泰奶, 珍珠手沖泰奶" {
-                size = Size.allCases[0].rawValue
-                totalPrice = menuDatas.fields.priceM!
-                submitOrderBtn.configuration?.title = "送出訂單 $ \(totalPrice)"
-            } else if drinkNameLable.text == "杏仁凍五桐茶, 豆漿凍紅茶, 綠茶凍五桐奶茶, 仙草凍奶茶, 綠茶凍五桐茶拿鐵, 仙草凍紅茶拿鐵, 老實人鮮柚綠茶, 蜂蜜鮮柚綠茶, 雪絨草莓奶酪, 雪絨葡萄果粒, 葡萄冰茶凍飲" {
-                size = Size.allCases[0].rawValue
-                totalPrice = menuDatas.fields.priceL!
-                submitOrderBtn.configuration?.title = "送出訂單 $ \(totalPrice)"
-            } else {
-                size = Size.allCases[row].rawValue
-                if row == 0 {
-                    totalPrice = menuDatas.fields.priceM!
-                    submitOrderBtn.configuration?.title = "送出訂單 $ \(totalPrice)"
-                } else {
-                    if let large = menuDatas.fields.priceL {
-                        totalPrice = large
-                        submitOrderBtn.configuration?.title = "送出訂單 $ \(totalPrice)"
-                    }
-                }
-            }
     
         }
     }

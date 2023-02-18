@@ -35,8 +35,8 @@ class CheckoutTableViewController: UITableViewController {
     }
 // MARK: - fetch orderList 
     func updateUI(with orderList: [OrderData.Record]) {
+        self.orderList = orderList
         DispatchQueue.main.async {
-            self.orderList = orderList
             self.tableView.reloadData()
         }
     }
@@ -64,6 +64,7 @@ class CheckoutTableViewController: UITableViewController {
         }
     }
     
+    // 刪除訂單 https://api.airtable.com/v0/{baseId}/{tableIdOrName}/{recordId}
     func deleteOrderData(urlStr: String, completion: @escaping (Result< Bool, Error >) -> Void) {
        
         let url = URL(string: urlStr)
@@ -72,8 +73,7 @@ class CheckoutTableViewController: UITableViewController {
         request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        let record = DeleteOrder.Record(id: id, deleted: deleted)
-        let deletedOrder = DeleteOrder(records: [record])
+        let deletedOrder = DeleteOrder(id: id, deleted: deleted)
         
         let encoder = JSONEncoder()
         let encodeData = try? encoder.encode(deletedOrder)
@@ -84,7 +84,7 @@ class CheckoutTableViewController: UITableViewController {
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let data = data {
                 let status = String(data: data, encoding: .utf8)
-                print(status)
+                print("✂️\(status ?? "")")
                 do {
                     let decoder = JSONDecoder()
                     let orderList = try decoder.decode(DeleteOrder.self, from: data)
@@ -133,7 +133,7 @@ class CheckoutTableViewController: UITableViewController {
             cell.addTopping.text = "+\(orderData.fields.toppings)"
         }
         
-        cell.totalCupsLable.text = "共\(orderData.fields.numberOfCups)杯"
+        cell.totalCupsLable.text = "共  \(orderData.fields.numberOfCups)  杯"
         cell.totalPriceLable.text = "$ \(orderData.fields.pricePerCup * orderData.fields.numberOfCups)"
         
         tableView.rowHeight = 140

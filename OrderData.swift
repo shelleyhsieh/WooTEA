@@ -31,7 +31,7 @@ struct OrderData: Codable {
 }
 
 
-// 記錄
+// 記錄訂單
 struct Order: Codable {
     var orders: [OrderData.Record]
     
@@ -41,12 +41,3 @@ struct Order: Codable {
     
 }
 
-//// 下載
-//struct OrderList: Codable {
-//    var records: [Record]
-//    
-//    struct Record: Codable {
-//        var id: String
-//        var fields: OrderData.Fields
-//    }
-//}

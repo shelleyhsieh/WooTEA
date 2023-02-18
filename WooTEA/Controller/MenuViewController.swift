@@ -9,12 +9,16 @@ import UIKit
 
 class MenuViewController: UIViewController {
     
-    var drinks = [DrinkMenu]()
+    var drinks = [Record]()
+    var displayCellModel = [Record]()
     
     var menuDatas = [Record]()
     let urlStr = "https://api.airtable.com/v0/appPjWNJvMilEx1Cz/Menu?sort[][field]=category"
     
     var currentBtnIndex: Int = 0
+    var categoriesBtn = [String]()
+
+    var dic: [String: [Record]] = [:]
     
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -25,11 +29,11 @@ class MenuViewController: UIViewController {
             switch result {
             case.success(let menuDatas):
                 self.updateUI(with: menuDatas)
-                print("Fetch data success")
+                self.displayCellModel = menuDatas
+                print("✅ Fetch data success")
             case .failure(let error):
-                self.displayError(error, title: "Failed to fetch the data")
+                self.displayError(error, title: "❌Failed to fetch the data")
             }
-            
         }
         
         self.collectionView.dataSource = self
@@ -38,12 +42,16 @@ class MenuViewController: UIViewController {
         configureCellSize()
     }
     
-    
     //MARK: - get menu from airtable
     func updateUI(with menuDatas: [Record]) {
+        
+        self.menuDatas = menuDatas
+        self.categoriesBtn = Record.categories(menuDatas)
+        self.dic = self.getDrinkBook(models: menuDatas)
+        print("😲每杯茶飲的分類\(self.categoriesBtn)")
+        
         DispatchQueue.main.async {
-            self.menuDatas = menuDatas
-            self.getDrinks(category: "醇茶")
+//            self.getDrinks(category: "醇茶")
             self.collectionView.reloadData()
         }
     }
@@ -55,30 +63,55 @@ class MenuViewController: UIViewController {
             self.present(alert, animated: true, completion: nil)
         }
     }
+
 //    MARK: - category button
     @IBAction func changeDrink(_ sender: UIButton) {
         
         let category = sender.titleLabel!.text!
-        getDrinks(category: category)
         currentBtnIndex = sender.tag
+        getDrinks(category: category)
+        print(category)
+
     }
-    
-    func getDrinks(category: String) {
-        drinks = []
-        for drink in allDrinks {
-            if drink.category == category {
-                drinks += [drink]
+//    建立參數名稱，往後若有修改只需要改參數名稱
+    func getDrinkBook(models: [Record]) -> [String: [Record]] {
+        var dic: [String: [Record]] = [:]
+        
+        for drink in models {
+            if dic[drink.fields.category] != nil {
+                dic[drink.fields.category]?.append(drink)
+            } else {
+                dic[drink.fields.category] = [drink]
             }
         }
+        return dic
+    }
+    // 分類後的飲料序列
+    func getDrinks(category: String) {
+        
+        if let drinks = self.dic[category] {
+            displayCellModel = drinks
+        }
+
+//        drinks = []
+//        for drink in menuDatas {
+//            if drink.fields.category == category {
+//                drinks = [drink] + drinks
+//            }
+//        }
+//        displayCellModel = drinks
+        
+        print("🥺\(displayCellModel)")
         collectionView.reloadData()
     }
-    
+
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let cell = sender as! UICollectionViewCell
         if let selectedItem = collectionView.indexPath(for: cell)?.row,
            let controller = segue.destination as? OrderTableViewController {
-            let menuData = menuDatas[selectedItem]
+            
+            let menuData = displayCellModel[selectedItem]
             controller.menuDatas = menuData
         }
     }
@@ -86,25 +119,24 @@ class MenuViewController: UIViewController {
 }
 //MARK: - Collection View
 extension MenuViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-
+    
+    // 只有一個section時可省略不寫
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        
         return 1
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
-        print(menuDatas.count)
-        return menuDatas.count
+       
+        return displayCellModel.count //分類後的數量
+//        return menuDatas.count  //全部數量
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "\(MenuCollectionViewCell.self)", for: indexPath) as! MenuCollectionViewCell
-        let menuData = menuDatas[indexPath.row]
         
+        let menuData = displayCellModel[indexPath.row]
         cell.nameLable.text = menuData.fields.name
-        
         let imageUrl = menuData.fields.image[0].url
         MenuController.shared.fetchImage(url: imageUrl) { (image) in
             guard let image = image else {return}
@@ -128,7 +160,6 @@ extension MenuViewController: UICollectionViewDelegate, UICollectionViewDataSour
         flowLayout.minimumLineSpacing = itemSpace            // 設定上下間距
         flowLayout.headerReferenceSize = CGSize(width: 0, height: 180)  // 設定Section Header高度
         flowLayout.sectionHeadersPinToVisibleBounds = true   // 滑動時讓SectionHeader浮在最上方
-//        collectionView.collectionViewLayout = flowLayout
         
     }
     

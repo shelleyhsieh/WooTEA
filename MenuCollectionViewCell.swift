@@ -12,4 +12,9 @@ class MenuCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var nameLable: UILabel!
     @IBOutlet weak var imageView: UIImageView!
     
+    override func prepareForReuse() {
+        nameLable.text = nil
+        imageView.image = nil
+    }
+    
 }

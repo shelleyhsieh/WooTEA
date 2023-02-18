@@ -6,8 +6,8 @@
 //
 
 import Foundation
-
 import UIKit
+
 extension OrderTableViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing (_ textField: UITextField) {
         textField.becomeFirstResponder()
@@ -23,13 +23,13 @@ extension OrderTableViewController: UITextFieldDelegate {
     
     public func setPickerView(selectAt sender: UITextField){
         switch sender {
-        case sugarTextField:
-            pickerView.tag = 0
         case tempTextField:
+            pickerView.tag = 0
+        case sugarTextField:
             pickerView.tag = 1
-        case toppingTextField:
-            pickerView.tag = 2
         case sizeTextField:
+            pickerView.tag = 2
+        case toppingTextField:
             pickerView.tag = 3
         default:
             break
@@ -67,27 +67,22 @@ extension OrderTableViewController: UITextFieldDelegate {
         
         switch pickerView.tag {
         case 0:
-            sugarTextField.text = sugar
-            if sugar.isEmpty == true {
-                sugar = Sugar.allCases[0].rawValue
-                sugarTextField.text = sugar
-            }
-
-        case 1:
+            
             tempTextField.text = temp
             if temp.isEmpty == true {
                 temp = Temperature.allCases[0].rawValue
                 tempTextField.text = temp
             }
-            
-        case 2:
-            toppingTextField.text = topping
-            if topping.isEmpty == true {
-                topping = Topping.allCases[0].rawValue
-                toppingTextField.text = topping
+
+        case 1:
+            sugarTextField.text = sugar
+            if sugar.isEmpty == true {
+                sugar = Sugar.allCases[0].rawValue
+                sugarTextField.text = sugar
             }
             
-        case 3:
+        case 2:
+            
             sizeTextField.text = size
             if size.isEmpty == true {
                 size = Size.allCases[0].rawValue
@@ -95,7 +90,11 @@ extension OrderTableViewController: UITextFieldDelegate {
             }
             
         default:
-            break
+            toppingTextField.text = topping
+            if topping.isEmpty == true {
+                topping = Topping.allCases[0].rawValue
+                toppingTextField.text = topping
+            }
         }
         tableView.endEditing(true)
 

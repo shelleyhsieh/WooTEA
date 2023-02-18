@@ -126,6 +126,7 @@ class OrderTableViewController: UITableViewController {
         }
     }
     
+    // 上傳資料 https://api.airtable.com/v0/{baseId}/{tableIdOrName}
     func uploadData(){
         let urlStr = "https://api.airtable.com/v0/appPjWNJvMilEx1Cz/Order"
         let url = URL(string: urlStr)
@@ -152,9 +153,13 @@ class OrderTableViewController: UITableViewController {
                     let order = try decoder.decode(OrderData.self, from: data)
                     let content = String(data: data, encoding: .utf8)
                     print("🧋\(order)")
-                    print("✅ \(content)")
+                    print("✅ \(content ?? "")")
+                    DispatchQueue.main.async { //  在使用者按下送出訂單後加入array中
+                        MenuController.shared.order.orders.append(record)
+                        print("📝訂單 \(record)")
+                    }
                 } catch {
-                    print("😡\(error)")
+                    print("😡\(error.localizedDescription)")
                 }
             }
         }.resume()

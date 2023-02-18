@@ -7,11 +7,9 @@
 
 import Foundation
 
+// 刪除訂單
 struct DeleteOrder: Codable {
-    var records: [Record]
-    
-    struct Record: Codable {
         var id: String
         var deleted: Bool
-    }
+    
 }

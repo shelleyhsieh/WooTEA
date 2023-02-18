@@ -22,6 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //        在sceneDelegate中新增接收通知，並在取得通知後去檢查儲存上傳資料的Array有多少資料，並顯示在TabBar上的badgeValue
         NotificationCenter.default.addObserver(self, selector: #selector(updateOrderBadgeValue), name: MenuController.orderUpdateNotification, object: nil)
         listTabBar = (window?.rootViewController as? UITabBarController)?.viewControllers?[1].tabBarItem
+        
     }
         
         func sceneDidDisconnect(_ scene: UIScene) {
@@ -53,7 +54,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
         
     @objc func updateOrderBadgeValue () {
-        if MenuController.shared.order.orders.count == 0 {
+        if MenuController.shared.order.orders.isEmpty {
             listTabBar?.badgeValue = nil
         } else {
             listTabBar?.badgeValue = String(MenuController.shared.order.orders.count)

@@ -7,23 +7,6 @@
 
 import Foundation
 
-struct DrinkMenu: Equatable {
-    let name: String
-    let priceM: Int?
-    let priceL: Int?
-    let iceOnly: Bool
-    let description: String?
-    let category: String
-}
-
-var allDrinks: [DrinkMenu] = []
-
-struct DrinkCategory {
-    let name: String
-    var menu: [DrinkMenu]
-}
-
-
 struct DrinkData: Codable {
     let records: [Record]
 }
@@ -31,6 +14,15 @@ struct DrinkData: Codable {
 struct Record: Codable {
     let id: String
     let fields: Fields
+    
+    static let categories = { (drinks: [Record]) -> [String] in
+        var allCategories = [String]()
+        for i in 0..<drinks.count {
+            let categoryBtn = drinks[i].fields.category
+            allCategories.append(categoryBtn)
+        }
+        return allCategories
+    }
     
     struct Fields: Codable {
         let name: String
