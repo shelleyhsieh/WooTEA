@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="xP0-KJ-WU4">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="54d-b4-Ubr">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
@@ -140,36 +140,35 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Riy-dC-vGm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1878.6259541984732" y="709.85915492957747"/>
+            <point key="canvasLocation" x="1879" y="710"/>
         </scene>
         <!--Menu View Controller-->
         <scene sceneID="VF0-hW-mwS">
             <objects>
-                <viewController id="FFv-62-mIy" customClass="MenuViewController" customModule="WooTEA" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MenuViewController" modalPresentationStyle="fullScreen" id="FFv-62-mIy" customClass="MenuViewController" customModule="WooTEA" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="U3q-Wx-lvm">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="LSW-Ve-8mo">
-                                <rect key="frame" x="0.0" y="71" width="393" height="698"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="LSW-Ve-8mo">
+                                <rect key="frame" x="0.0" y="103" width="393" height="666"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="EGQ-aY-m2k">
                                     <size key="itemSize" width="185" height="185"/>
-                                    <size key="headerReferenceSize" width="50" height="178"/>
+                                    <size key="headerReferenceSize" width="50" height="216"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MenuCollectionViewCell" id="xlr-ho-9NP" customClass="MenuCollectionViewCell" customModule="WooTEA" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="178" width="185" height="185"/>
+                                        <rect key="frame" x="0.0" y="216" width="185" height="185"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="XEo-Uo-s7A" customClass="OrderCollectionViewCell" customModule="WooTEA" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="185" height="185"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RBU-X9-lp1">
-                                                    <rect key="frame" x="0.0" y="0.0" width="177" height="182"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="177" height="672"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="經典五桐茶" translatesAutoresizingMaskIntoConstraints="NO" id="d22-6f-iJm">
@@ -177,7 +176,7 @@
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="經典五桐茶" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GUQ-FK-tUt">
-                                                            <rect key="frame" x="8" y="153" width="169" height="21"/>
+                                                            <rect key="frame" x="8" y="147" width="169" height="28"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" name="STSongti-TC-Regular" family="Songti TC" pointSize="20"/>
                                                             <nil key="textColor"/>
@@ -191,112 +190,143 @@
                                         <connections>
                                             <outlet property="imageView" destination="d22-6f-iJm" id="joL-fM-Md3"/>
                                             <outlet property="nameLable" destination="GUQ-FK-tUt" id="uU4-8t-49d"/>
-                                            <segue destination="NZ5-Q0-Fq8" kind="show" destinationCreationSelector="showOrderDetail:" id="o2z-xP-ecT"/>
+                                            <segue destination="NZ5-Q0-Fq8" kind="show" id="o2z-xP-ecT"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
                                 <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MenuCollectionReusableHeaderView" id="sym-dq-6Ss" customClass="MenuCollectionReusableHeaderView" customModule="WooTEA" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="0.0" width="393" height="178"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="216"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
-                                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="C8n-IS-CTV">
-                                            <rect key="frame" x="8" y="0.0" width="377" height="174"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C8n-IS-CTV">
+                                            <rect key="frame" x="18" y="8" width="357" height="200"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="紅色邊框" translatesAutoresizingMaskIntoConstraints="NO" id="Tbj-at-sFW">
-                                                    <rect key="frame" x="-9" y="84" width="395" height="90"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_down" translatesAutoresizingMaskIntoConstraints="NO" id="WHb-0O-r2k">
+                                                    <rect key="frame" x="48" y="5" width="261" height="84.666666666666671"/>
                                                 </imageView>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="logo_down" translatesAutoresizingMaskIntoConstraints="NO" id="WHb-0O-r2k">
-                                                    <rect key="frame" x="68" y="0.0" width="240" height="86"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                </imageView>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Otv-rN-Qck">
-                                                    <rect key="frame" x="27" y="88" width="100" height="35"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <size key="titleShadowOffset" width="15" height="15"/>
-                                                    <state key="normal" title="Button"/>
-                                                    <buttonConfiguration key="configuration" style="filled" title="醇茶" cornerStyle="capsule">
-                                                        <fontDescription key="titleFontDescription" name="STSongti-TC-Bold" family="Songti TC" pointSize="22"/>
-                                                        <color key="baseBackgroundColor" red="0.63529411759999999" green="0.51764705879999995" blue="0.36862745099999999" alpha="0.69919288076357611" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    </buttonConfiguration>
-                                                    <connections>
-                                                        <action selector="changeDrink:" destination="FFv-62-mIy" eventType="touchUpInside" id="Nd6-iF-15N"/>
-                                                    </connections>
-                                                </button>
-                                                <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oaH-4D-qtS">
-                                                    <rect key="frame" x="140" y="88" width="100" height="35"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <size key="titleShadowOffset" width="15" height="15"/>
-                                                    <state key="normal" title="Button"/>
-                                                    <buttonConfiguration key="configuration" style="filled" title="奶茶" cornerStyle="capsule">
-                                                        <fontDescription key="titleFontDescription" name="STSongti-TC-Bold" family="Songti TC" pointSize="22"/>
-                                                        <color key="baseBackgroundColor" red="0.63529411759999999" green="0.51764705879999995" blue="0.36862745099999999" alpha="0.69919288079999997" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    </buttonConfiguration>
-                                                    <connections>
-                                                        <action selector="changeDrink:" destination="FFv-62-mIy" eventType="touchUpInside" id="PxO-hZ-aUI"/>
-                                                    </connections>
-                                                </button>
-                                                <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OT6-F6-Wpp">
-                                                    <rect key="frame" x="254" y="88" width="100" height="35"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <size key="titleShadowOffset" width="15" height="15"/>
-                                                    <state key="normal" title="Button"/>
-                                                    <buttonConfiguration key="configuration" style="filled" title="鮮奶" cornerStyle="capsule">
-                                                        <fontDescription key="titleFontDescription" name="STSongti-TC-Bold" family="Songti TC" pointSize="22"/>
-                                                        <color key="baseBackgroundColor" red="0.63529411759999999" green="0.51764705879999995" blue="0.36862745099999999" alpha="0.69919288079999997" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    </buttonConfiguration>
-                                                    <connections>
-                                                        <action selector="changeDrink:" destination="FFv-62-mIy" eventType="touchUpInside" id="Ja9-e3-scS"/>
-                                                    </connections>
-                                                </button>
-                                                <button opaque="NO" tag="3" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r0j-3k-0xE">
-                                                    <rect key="frame" x="27" y="127" width="100" height="40"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <size key="titleShadowOffset" width="15" height="15"/>
-                                                    <state key="normal" title="Button"/>
-                                                    <buttonConfiguration key="configuration" style="filled" title="奶霜" cornerStyle="capsule">
-                                                        <fontDescription key="titleFontDescription" name="STSongti-TC-Bold" family="Songti TC" pointSize="22"/>
-                                                        <color key="baseBackgroundColor" red="0.63529411759999999" green="0.51764705879999995" blue="0.36862745099999999" alpha="0.69919288079999997" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    </buttonConfiguration>
-                                                    <connections>
-                                                        <action selector="changeDrink:" destination="FFv-62-mIy" eventType="touchUpInside" id="3sc-IY-hCM"/>
-                                                    </connections>
-                                                </button>
-                                                <button opaque="NO" tag="4" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XA9-XJ-aRQ">
-                                                    <rect key="frame" x="140" y="129" width="100" height="39"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <size key="titleShadowOffset" width="15" height="15"/>
-                                                    <state key="normal" title="Button"/>
-                                                    <buttonConfiguration key="configuration" style="filled" title="農摘" cornerStyle="capsule">
-                                                        <fontDescription key="titleFontDescription" name="STSongti-TC-Bold" family="Songti TC" pointSize="22"/>
-                                                        <color key="baseBackgroundColor" red="0.63529411759999999" green="0.51764705879999995" blue="0.36862745099999999" alpha="0.69919288079999997" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    </buttonConfiguration>
-                                                    <connections>
-                                                        <action selector="changeDrink:" destination="FFv-62-mIy" eventType="touchUpInside" id="B93-gK-D8b"/>
-                                                    </connections>
-                                                </button>
-                                                <button opaque="NO" tag="5" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="du1-Dq-y8d">
-                                                    <rect key="frame" x="248" y="127" width="112" height="41"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <size key="titleShadowOffset" width="15" height="15"/>
-                                                    <state key="normal" title="Button"/>
-                                                    <buttonConfiguration key="configuration" style="filled" title="季節限定" cornerStyle="capsule">
-                                                        <fontDescription key="titleFontDescription" name="STSongti-TC-Bold" family="Songti TC" pointSize="22"/>
-                                                        <color key="baseBackgroundColor" red="0.63529411759999999" green="0.51764705879999995" blue="0.36862745099999999" alpha="0.69919288079999997" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    </buttonConfiguration>
-                                                    <connections>
-                                                        <action selector="changeDrink:" destination="FFv-62-mIy" eventType="touchUpInside" id="v5F-Tu-X2W"/>
-                                                    </connections>
-                                                </button>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qrd-ci-oBa" userLabel="RedView">
+                                                    <rect key="frame" x="0.0" y="99.666666666666686" width="357" height="97.333333333333314"/>
+                                                    <subviews>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="ksW-xB-fe8">
+                                                            <rect key="frame" x="28" y="4" width="300" height="89.333333333333329"/>
+                                                            <subviews>
+                                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="nNa-MS-wH9">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="286" height="40.666666666666664"/>
+                                                                    <subviews>
+                                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Otv-rN-Qck">
+                                                                            <rect key="frame" x="0.0" y="0.0" width="62" height="40.666666666666664"/>
+                                                                            <size key="titleShadowOffset" width="15" height="15"/>
+                                                                            <state key="normal" title="Button"/>
+                                                                            <buttonConfiguration key="configuration" style="filled" title="醇茶" cornerStyle="capsule">
+                                                                                <fontDescription key="titleFontDescription" name="STSongti-TC-Bold" family="Songti TC" pointSize="19"/>
+                                                                                <color key="baseBackgroundColor" red="0.63529411759999999" green="0.51764705879999995" blue="0.36862745099999999" alpha="0.69919288076357611" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                            </buttonConfiguration>
+                                                                            <connections>
+                                                                                <action selector="changeDrink:" destination="FFv-62-mIy" eventType="touchUpInside" id="Nd6-iF-15N"/>
+                                                                            </connections>
+                                                                        </button>
+                                                                        <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oaH-4D-qtS">
+                                                                            <rect key="frame" x="112" y="0.0" width="62" height="40.666666666666664"/>
+                                                                            <size key="titleShadowOffset" width="15" height="15"/>
+                                                                            <state key="normal" title="Button"/>
+                                                                            <buttonConfiguration key="configuration" style="filled" title="奶茶" cornerStyle="capsule">
+                                                                                <fontDescription key="titleFontDescription" name="STSongti-TC-Bold" family="Songti TC" pointSize="19"/>
+                                                                                <color key="baseBackgroundColor" red="0.63529411759999999" green="0.51764705879999995" blue="0.36862745099999999" alpha="0.69919288079999997" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                            </buttonConfiguration>
+                                                                            <connections>
+                                                                                <action selector="changeDrink:" destination="FFv-62-mIy" eventType="touchUpInside" id="PxO-hZ-aUI"/>
+                                                                            </connections>
+                                                                        </button>
+                                                                        <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OT6-F6-Wpp">
+                                                                            <rect key="frame" x="224" y="0.0" width="62" height="40.666666666666664"/>
+                                                                            <size key="titleShadowOffset" width="15" height="15"/>
+                                                                            <state key="normal" title="Button"/>
+                                                                            <buttonConfiguration key="configuration" style="filled" title="鮮奶" cornerStyle="capsule">
+                                                                                <fontDescription key="titleFontDescription" name="STSongti-TC-Bold" family="Songti TC" pointSize="19"/>
+                                                                                <color key="baseBackgroundColor" red="0.63529411759999999" green="0.51764705879999995" blue="0.36862745099999999" alpha="0.69919288079999997" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                            </buttonConfiguration>
+                                                                            <connections>
+                                                                                <action selector="changeDrink:" destination="FFv-62-mIy" eventType="touchUpInside" id="Ja9-e3-scS"/>
+                                                                            </connections>
+                                                                        </button>
+                                                                    </subviews>
+                                                                </stackView>
+                                                                <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" spacing="18" translatesAutoresizingMaskIntoConstraints="NO" id="68v-PC-awo">
+                                                                    <rect key="frame" x="0.0" y="48.666666666666671" width="300" height="40.666666666666671"/>
+                                                                    <subviews>
+                                                                        <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r0j-3k-0xE">
+                                                                            <rect key="frame" x="0.0" y="0.0" width="62" height="40.666666666666664"/>
+                                                                            <size key="titleShadowOffset" width="15" height="15"/>
+                                                                            <state key="normal" title="Button"/>
+                                                                            <buttonConfiguration key="configuration" style="filled" title="奶霜" cornerStyle="capsule">
+                                                                                <fontDescription key="titleFontDescription" name="STSongti-TC-Bold" family="Songti TC" pointSize="19"/>
+                                                                                <color key="baseBackgroundColor" red="0.63529411759999999" green="0.51764705879999995" blue="0.36862745099999999" alpha="0.69919288079999997" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                            </buttonConfiguration>
+                                                                            <connections>
+                                                                                <action selector="changeDrink:" destination="FFv-62-mIy" eventType="touchUpInside" id="3sc-IY-hCM"/>
+                                                                            </connections>
+                                                                        </button>
+                                                                        <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XA9-XJ-aRQ">
+                                                                            <rect key="frame" x="112.66666666666666" y="0.0" width="62" height="40.666666666666664"/>
+                                                                            <size key="titleShadowOffset" width="15" height="15"/>
+                                                                            <state key="normal" title="Button"/>
+                                                                            <buttonConfiguration key="configuration" style="filled" title="農摘" cornerStyle="capsule">
+                                                                                <fontDescription key="titleFontDescription" name="STSongti-TC-Bold" family="Songti TC" pointSize="19"/>
+                                                                                <color key="baseBackgroundColor" red="0.63529411759999999" green="0.51764705879999995" blue="0.36862745099999999" alpha="0.69919288079999997" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                            </buttonConfiguration>
+                                                                            <connections>
+                                                                                <action selector="changeDrink:" destination="FFv-62-mIy" eventType="touchUpInside" id="B93-gK-D8b"/>
+                                                                            </connections>
+                                                                        </button>
+                                                                        <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="du1-Dq-y8d">
+                                                                            <rect key="frame" x="212" y="0.0" width="88" height="40.666666666666664"/>
+                                                                            <size key="titleShadowOffset" width="15" height="15"/>
+                                                                            <state key="normal" title="Button"/>
+                                                                            <buttonConfiguration key="configuration" style="filled" title="季節限定" cornerStyle="capsule">
+                                                                                <fontDescription key="titleFontDescription" name="STSongti-TC-Bold" family="Songti TC" pointSize="16"/>
+                                                                                <color key="baseBackgroundColor" red="0.63529411759999999" green="0.51764705879999995" blue="0.36862745099999999" alpha="0.69919288079999997" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                            </buttonConfiguration>
+                                                                            <connections>
+                                                                                <action selector="changeDrink:" destination="FFv-62-mIy" eventType="touchUpInside" id="v5F-Tu-X2W"/>
+                                                                            </connections>
+                                                                        </button>
+                                                                    </subviews>
+                                                                </stackView>
+                                                            </subviews>
+                                                        </stackView>
+                                                    </subviews>
+                                                    <color key="backgroundColor" name="AppRed"/>
+                                                    <color key="tintColor" name="AppRed"/>
+                                                    <constraints>
+                                                        <constraint firstItem="ksW-xB-fe8" firstAttribute="leading" secondItem="Qrd-ci-oBa" secondAttribute="leading" constant="28" id="DyA-lW-D7h"/>
+                                                        <constraint firstItem="ksW-xB-fe8" firstAttribute="top" secondItem="Qrd-ci-oBa" secondAttribute="top" constant="4" id="cYa-ty-POX"/>
+                                                        <constraint firstAttribute="trailing" secondItem="ksW-xB-fe8" secondAttribute="trailing" constant="29" id="gS1-SB-eai"/>
+                                                        <constraint firstAttribute="bottom" secondItem="ksW-xB-fe8" secondAttribute="bottom" constant="4" id="zT5-jM-Bgm"/>
+                                                    </constraints>
+                                                </view>
                                             </subviews>
                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="Qrd-ci-oBa" secondAttribute="bottom" constant="3" id="02i-WF-M5t"/>
+                                                <constraint firstAttribute="trailing" secondItem="Qrd-ci-oBa" secondAttribute="trailing" id="6cI-Lc-m6x"/>
+                                                <constraint firstAttribute="trailing" secondItem="WHb-0O-r2k" secondAttribute="trailing" constant="48" id="908-hd-sFF"/>
+                                                <constraint firstItem="Qrd-ci-oBa" firstAttribute="top" secondItem="WHb-0O-r2k" secondAttribute="bottom" constant="10" id="Kmm-Vf-lui"/>
+                                                <constraint firstItem="WHb-0O-r2k" firstAttribute="top" secondItem="C8n-IS-CTV" secondAttribute="top" constant="5" id="bzu-3d-Ve3"/>
+                                                <constraint firstItem="WHb-0O-r2k" firstAttribute="leading" secondItem="C8n-IS-CTV" secondAttribute="leading" constant="48" id="fKL-BM-mb5"/>
+                                                <constraint firstItem="Qrd-ci-oBa" firstAttribute="leading" secondItem="C8n-IS-CTV" secondAttribute="leading" id="uS9-EJ-fqw"/>
+                                            </constraints>
                                         </view>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailingMargin" secondItem="C8n-IS-CTV" secondAttribute="trailing" constant="10" id="46Q-Fc-SEf"/>
+                                        <constraint firstItem="C8n-IS-CTV" firstAttribute="bottom" secondItem="sym-dq-6Ss" secondAttribute="bottomMargin" id="6as-wI-Fgz"/>
+                                        <constraint firstItem="C8n-IS-CTV" firstAttribute="leading" secondItem="sym-dq-6Ss" secondAttribute="leadingMargin" constant="10" id="Yq0-EW-RLE"/>
+                                        <constraint firstItem="C8n-IS-CTV" firstAttribute="top" secondItem="sym-dq-6Ss" secondAttribute="topMargin" id="fmw-Cw-Nqo"/>
+                                    </constraints>
                                     <connections>
-                                        <outletCollection property="categoryBtns" destination="Otv-rN-Qck" collectionClass="NSMutableArray" id="7d4-Ql-NNL"/>
                                         <outletCollection property="categoryBtns" destination="oaH-4D-qtS" collectionClass="NSMutableArray" id="Vcf-U5-2n8"/>
                                         <outletCollection property="categoryBtns" destination="OT6-F6-Wpp" collectionClass="NSMutableArray" id="4Ij-2e-dLM"/>
+                                        <outletCollection property="categoryBtns" destination="Otv-rN-Qck" collectionClass="NSMutableArray" id="7d4-Ql-NNL"/>
                                         <outletCollection property="categoryBtns" destination="r0j-3k-0xE" collectionClass="NSMutableArray" id="qiT-Ne-uDT"/>
                                         <outletCollection property="categoryBtns" destination="XA9-XJ-aRQ" collectionClass="NSMutableArray" id="giN-BI-5hd"/>
                                         <outletCollection property="categoryBtns" destination="du1-Dq-y8d" collectionClass="NSMutableArray" id="IFP-Th-wR8"/>
@@ -306,6 +336,12 @@
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="TPl-nC-LMk"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="LSW-Ve-8mo" firstAttribute="leading" secondItem="TPl-nC-LMk" secondAttribute="leading" id="9Ee-hT-LUF"/>
+                            <constraint firstItem="LSW-Ve-8mo" firstAttribute="trailing" secondItem="TPl-nC-LMk" secondAttribute="trailing" id="H2D-hD-aZr"/>
+                            <constraint firstItem="LSW-Ve-8mo" firstAttribute="bottom" secondItem="TPl-nC-LMk" secondAttribute="bottom" id="O8G-ac-YTO"/>
+                            <constraint firstItem="LSW-Ve-8mo" firstAttribute="top" secondItem="TPl-nC-LMk" secondAttribute="top" id="qn6-Ts-oJ4"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="33d-rn-l5O"/>
                     <connections>
@@ -314,12 +350,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AGt-Qv-hhN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1878.6259541984732" y="-27.464788732394368"/>
+            <point key="canvasLocation" x="1741.2213740458014" y="-29.577464788732396"/>
         </scene>
         <!--Order Table View Controller-->
         <scene sceneID="i5o-0M-hk1">
             <objects>
-                <tableViewController id="NZ5-Q0-Fq8" customClass="OrderTableViewController" customModule="WooTEA" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="OrderTableViewController" modalPresentationStyle="fullScreen" id="NZ5-Q0-Fq8" customClass="OrderTableViewController" customModule="WooTEA" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="10" sectionFooterHeight="10" id="56J-OA-jxq">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -338,17 +374,17 @@
                                                     <rect key="frame" x="20" y="11" width="133" height="214"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="DrinkName" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qoe-VG-x3A">
-                                                    <rect key="frame" x="161" y="1" width="198" height="45"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" name="STSongti-TC-Regular" family="Songti TC" pointSize="24"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Drink description" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F8M-Zx-W0W">
                                                     <rect key="frame" x="161" y="44" width="212" height="181"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="STSongti-TC-Regular" family="Songti TC" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="DrinkName" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qoe-VG-x3A">
+                                                    <rect key="frame" x="161" y="11" width="212" height="34"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="STSongti-TC-Regular" family="Songti TC" pointSize="24"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -459,7 +495,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="加料：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6AA-Mf-COG">
-                                                    <rect key="frame" x="35" y="20" width="74" height="21"/>
+                                                    <rect key="frame" x="34" y="20" width="75" height="22"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="STSongti-TC-Bold" family="Songti TC" pointSize="18"/>
                                                     <nil key="textColor"/>
@@ -574,13 +610,69 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7BZ-xi-0ur" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2707.6335877862593" y="-27.464788732394368"/>
+            <point key="canvasLocation" x="2583.969465648855" y="-27.464788732394368"/>
+        </scene>
+        <!--Enter View Controller-->
+        <scene sceneID="i2x-Is-PzE">
+            <objects>
+                <viewController id="54d-b4-Ubr" customClass="FBEnterViewController" customModule="WooTEA" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="mgI-dm-Hdv">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XqT-f7-gHM">
+                                <rect key="frame" x="30" y="172" width="333" height="246"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_down" translatesAutoresizingMaskIntoConstraints="NO" id="azB-lc-IRY">
+                                        <rect key="frame" x="0.0" y="38" width="333" height="170"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemOrangeColor"/>
+                                <constraints>
+                                    <constraint firstItem="azB-lc-IRY" firstAttribute="centerY" secondItem="XqT-f7-gHM" secondAttribute="centerY" id="YLB-Fq-OlC"/>
+                                    <constraint firstAttribute="trailing" secondItem="azB-lc-IRY" secondAttribute="trailing" id="aHd-bA-4MA"/>
+                                    <constraint firstItem="azB-lc-IRY" firstAttribute="top" secondItem="XqT-f7-gHM" secondAttribute="top" constant="38" id="k7x-E4-QNN"/>
+                                    <constraint firstItem="azB-lc-IRY" firstAttribute="leading" secondItem="XqT-f7-gHM" secondAttribute="leading" id="r1R-Dy-cJF"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fTa-Jd-l5p">
+                                <rect key="frame" x="65" y="588" width="263" height="39"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="39.329999999999998" id="LX6-qW-HI8"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Sign up via Facebook">
+                                    <fontDescription key="titleFontDescription" type="system" weight="black" pointSize="21"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="login:" destination="54d-b4-Ubr" eventType="touchUpInside" id="Jh3-H5-HLP"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="pHB-aF-cmq"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="bottomMargin" secondItem="XqT-f7-gHM" secondAttribute="bottom" constant="400" id="8rD-sj-3Ti"/>
+                            <constraint firstItem="XqT-f7-gHM" firstAttribute="leading" secondItem="pHB-aF-cmq" secondAttribute="leading" constant="30" id="Dor-ey-w4I"/>
+                            <constraint firstItem="pHB-aF-cmq" firstAttribute="trailing" secondItem="XqT-f7-gHM" secondAttribute="trailing" constant="30" id="KJQ-GR-oHX"/>
+                            <constraint firstItem="XqT-f7-gHM" firstAttribute="top" secondItem="pHB-aF-cmq" secondAttribute="top" constant="113" id="Kqn-WV-rR6"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="fTa-Jd-l5p" secondAttribute="trailing" constant="49.329999999999998" id="MMb-bh-M2d"/>
+                            <constraint firstItem="fTa-Jd-l5p" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="mgI-dm-Hdv" secondAttribute="leadingMargin" id="ilt-Vk-vnB"/>
+                            <constraint firstItem="pHB-aF-cmq" firstAttribute="bottom" secondItem="fTa-Jd-l5p" secondAttribute="bottom" constant="191" id="qQ7-fw-NOb"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5YI-WH-vIX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="75.572519083969468" y="-742.25352112676057"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="L8r-cc-mL8">
             <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="xP0-KJ-WU4" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="TabBarController" automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="fullScreen" id="xP0-KJ-WU4" sceneMemberID="viewController">
                     <toolbarItems/>
+                    <navigationItem key="navigationItem" id="3S8-5R-rkt"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="d0i-AO-lev">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -594,7 +686,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zSH-oP-uJo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="45" y="-27"/>
+            <point key="canvasLocation" x="77" y="-27"/>
         </scene>
         <!--結帳-->
         <scene sceneID="Ozw-7W-elI">
@@ -613,12 +705,12 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zve-8D-seX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="951.90839694656484" y="709.85915492957747"/>
+            <point key="canvasLocation" x="952" y="710"/>
         </scene>
         <!--訂單-->
         <scene sceneID="Hs5-Bj-fKD">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="V79-AE-kgG" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="fullScreen" id="V79-AE-kgG" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="訂單" image="note.text" catalog="system" id="HkN-W2-Ml1"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="IE6-9n-9ij">
@@ -632,7 +724,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vFp-4f-bip" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="951.90839694656484" y="-27.464788732394368"/>
+            <point key="canvasLocation" x="897" y="-27"/>
         </scene>
     </scenes>
     <resources>
@@ -641,7 +733,6 @@
         <image name="minus" catalog="system" width="128" height="26"/>
         <image name="note.text" catalog="system" width="128" height="107"/>
         <image name="plus" catalog="system" width="128" height="113"/>
-        <image name="紅色邊框" width="948" height="67"/>
         <image name="經典五桐茶" width="449" height="620"/>
         <namedColor name="AppRed">
             <color red="0.63137254901960782" green="0.16078431372549021" blue="0.15294117647058825" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -651,6 +742,9 @@
         </systemColor>
         <systemColor name="systemGray5Color">
             <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemOrangeColor">
+            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

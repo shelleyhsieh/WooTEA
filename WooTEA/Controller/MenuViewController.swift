@@ -27,12 +27,12 @@ class MenuViewController: UIViewController {
         
         MenuController.shared.fetchData(urlStr: urlStr) { (result) in
             switch result {
-            case.success(let menuDatas):
+            case.success(menudata: let menuDatas):
                 self.updateUI(with: menuDatas)
                 self.displayCellModel = menuDatas
-                print("✅ Fetch data success")
-            case .failure(let error):
-                self.displayError(error, title: "❌Failed to fetch the data")
+                print("✅ 成功抓取檔案")
+            case .failure(error: let error):
+                self.displayError(error, title: "❌檔案抓取失敗")
             }
         }
         
@@ -51,11 +51,11 @@ class MenuViewController: UIViewController {
         print("😲每杯茶飲的分類\(self.categoriesBtn)")
         
         DispatchQueue.main.async {
-//            self.getDrinks(category: "醇茶")
             self.collectionView.reloadData()
         }
     }
     
+    // 檔案抓取失敗時出示警告視窗
     func displayError(_ error: Error, title: String) {
         DispatchQueue.main.async {
             let alert = UIAlertController(title: title, message: error.localizedDescription, preferredStyle: .alert)
@@ -137,6 +137,7 @@ extension MenuViewController: UICollectionViewDelegate, UICollectionViewDataSour
         
         let menuData = displayCellModel[indexPath.row]
         cell.nameLable.text = menuData.fields.name
+        
         let imageUrl = menuData.fields.image[0].url
         MenuController.shared.fetchImage(url: imageUrl) { (image) in
             guard let image = image else {return}
@@ -158,7 +159,7 @@ extension MenuViewController: UICollectionViewDelegate, UICollectionViewDataSour
         flowLayout.estimatedItemSize = .zero                 //讓cell尺寸依據設定的itemSize顯示
         flowLayout.minimumInteritemSpacing = itemSpace       // 設定cell左右間距
         flowLayout.minimumLineSpacing = itemSpace            // 設定上下間距
-        flowLayout.headerReferenceSize = CGSize(width: 0, height: 180)  // 設定Section Header高度
+        flowLayout.headerReferenceSize = CGSize(width: 0, height: 210)  // 設定Section Header高度
         flowLayout.sectionHeadersPinToVisibleBounds = true   // 滑動時讓SectionHeader浮在最上方
         
     }

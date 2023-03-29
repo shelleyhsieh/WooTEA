@@ -24,24 +24,40 @@ class MenuController {
     // 下載menu  https://api.airtable.com/v0/{baseId}/{tableIdOrName}/{recordId}
     // https://api.airtable.com/v0/appPjWNJvMilEx1Cz/Menu
     func fetchData(urlStr: String, completion: @escaping (Result<[Record], Error>) -> Void) {
-        let url = URL(string: urlStr)
-        var request = URLRequest(url: url!)
+        // 先判斷網址是否正確
+        guard let url = URL(string: urlStr) else {
+            print("🕸️網址錯誤")
+            return
+        }
+        var request = URLRequest(url: url)
+        // 設定httpmethod
         request.httpMethod = "Get"
         request.setValue("Bearer keyy7QrfYj3mhT9pM", forHTTPHeaderField: "Authorization")
+        
+        // 使用URLSession建立網路連線
         URLSession.shared.dataTask(with: request) { data, response, error in
-            if let data = data {
+            // 先判斷是否有error
+            if let error = error {
+                print("😡\(error)")
+                completion(.failure(error))
+            } else if let data = data {
                 do {
+                    //解析 drinkDataResponse
                     let decoder = JSONDecoder()
-                    let drinkMenu = try decoder.decode(DrinkData.self, from: data)
-                
-                    completion(.success(drinkMenu.records))
+                    let drinkDataResponse = try decoder.decode(DrinkData.self, from: data)
+                    
+                    //非同步成功回傳飲料清單
+                    completion(.success(drinkDataResponse.records))
                     print("✅ download menu")
                     
                 } catch  {
+                    print("❌ 解碼失敗")
                     completion(.failure(error))
                 }
-            }else if let error = error {
-                completion(.failure(error))
+            }
+            //檢查 status code
+            if let httpResponse = response as? HTTPURLResponse, error == nil {
+                print("HTTP response status code: \(httpResponse.statusCode)")
             }
         }.resume()
     }
@@ -60,27 +76,33 @@ class MenuController {
 
     //重新抓取訂單
     func fetchOrderData(urlStr:String, completion: @escaping(Result< [OrderData.Record], Error >) -> Void) { //[OrderData.Record]
-        let url = URL(string: urlStr)
-        var request = URLRequest(url: url!)
+        // 先判斷網址是否正確
+        guard let url = URL(string: urlStr) else {
+            print("🕸️網址錯誤")
+            return
+        }
+        var request = URLRequest(url: url)
 
         request.setValue("Bearer keyy7QrfYj3mhT9pM", forHTTPHeaderField: "Authorization")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
         URLSession.shared.dataTask(with: request) { data, response, error in
-            if let data = data {
+            if let error = error {
+                print("下載失敗")
+                completion(.failure(error))
+            } else if let data = data {
                 do {
                     let decoder = JSONDecoder()
                     let renewOrder = try decoder.decode(OrderData.self, from: data)
-                    print("✏️訂單明細\(renewOrder.records)") //.records
-                    completion(.success(renewOrder.records)) //.records
+                    print("✏️ 訂單明細\(renewOrder.records)")
+                    completion(.success(renewOrder.records))
                 } catch  {
-                    print("解碼失敗")
+                    print("✏️ ❌ 解碼失敗 ")
                     completion(.failure(error))
                 }
-            } else if let error = error {
-                print("下載失敗")
-                completion(.failure(error))
             }
-            if let httpResponse = response as? HTTPURLResponse {
+            //檢查 status code
+            if let httpResponse = response as? HTTPURLResponse, error == nil {
                 print("HTTP response status code: \(httpResponse.statusCode)")
             }
         }.resume()

@@ -2,6 +2,26 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+    <key>CFBundleURLTypes</key>
+    <array>
+      <dict>
+      <key>CFBundleURLSchemes</key>
+      <array>
+        <string>fb614269143864201</string>
+      </array>
+      </dict>
+    </array>
+    <key>FacebookAppID</key>
+    <string>614269143864201</string>
+    <key>FacebookClientToken</key>
+    <string>1d24038ea6f194676d4c637bd83f0d14</string>
+    <key>FacebookDisplayName</key>
+    <string>WooTeaDrinkOrderApp</string>
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+      <string>fbapi</string>
+      <string>fb-messenger-share-api</string>
+    </array>
 	<key>UIAppFonts</key>
 	<array>
 		<string>jf-openhuninn-1.1.ttf</string>

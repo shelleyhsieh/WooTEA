@@ -9,8 +9,8 @@ import UIKit
 
 class OrderTableViewController: UITableViewController {
     
-    let urlStr = "https://api.airtable.com/v0/appPjWNJvMilEx1Cz/Order"
-    var menuDatas: Record!
+    // 接收menudata資料
+    var menuDatas: Record?
     var orderData = [OrderData.Record]()
     
     @IBOutlet weak var drinkImageView: UIImageView!
@@ -30,7 +30,18 @@ class OrderTableViewController: UITableViewController {
     
     let pickerView = UIPickerView()
     
+    // 建立預設值
     var orderName: String = ""
+    init?(coder: NSCoder, ordreName: String) {
+        self.orderName = ordreName
+        super.init(coder: coder)
+    }
+    
+    required init?(coder aDecode: NSCoder) {
+        //fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecode)
+    }
+    
     var temp:String = ""
     var sugar:String = ""
     var topping:String = ""
@@ -42,21 +53,24 @@ class OrderTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //init
         self.navigationItem.title = "商品明細"
         
         //菜單頁面下載後傳到訂購頁面
-        drinkNameLable.text = menuDatas.fields.name
-        descriptionLable.text = menuDatas.fields.description
-        
-        // 下載照片
-        let imageUrl = menuDatas.fields.image[0].url
-        MenuController.shared.fetchImage(url: imageUrl) { (image) in
-            guard let image = image else { return }
-            DispatchQueue.main.async {
-                self.drinkImageView.image = image
-            }
+        if let menuDatas = menuDatas {
+            drinkNameLable.text = menuDatas.fields.name //Unexpectedly found nil while implicitly unwrapping an Optional value?
+            descriptionLable.text = menuDatas.fields.description
         }
+            // 下載照片
+        let imageUrl = menuDatas!.fields.image[0].url
+        
+            MenuController.shared.fetchImage(url: imageUrl) { (image) in
+                guard let image = image else { return }
+                
+                DispatchQueue.main.async {
+                    self.drinkImageView.image = image
+                    print("🧋")
+                }
+            }
         
         numberOfCupLable.text = String(numberOfCup)
         submitOrderBtn.configuration?.title = "送出訂單 $ \(totalPrice)"
@@ -95,7 +109,7 @@ class OrderTableViewController: UITableViewController {
     }
     // 少於一杯跳警告
     @IBAction func minusBtn(_ sender: UIButton) {
-        if numberOfCup <= 1 {
+        if numberOfCup < 1 {
             showAlert(title: "數量錯誤", message: "請輸入一杯以上")
         } else {
             numberOfCup -= 1
@@ -119,24 +133,30 @@ class OrderTableViewController: UITableViewController {
         } else if sizeTextField.text?.isEmpty == true {
             showAlert(title: "提醒", message: "請選擇飲品大小")
         } else {
+            //加入訂單
             confirmOrder {  _ in
-                self.uploadData()
-                self.navigationController?.popViewController(animated: true)  //加入訂單完回到首頁
+                self.uploadData() //上傳訂單到AirTable
+                self.navigationController?.popViewController(animated: true)//加入訂單完回到上一頁
+                print("✅加入訂單成功！")
             }
         }
+        
     }
     
     // 上傳資料 https://api.airtable.com/v0/{baseId}/{tableIdOrName}
     func uploadData(){
         let urlStr = "https://api.airtable.com/v0/appPjWNJvMilEx1Cz/Order"
-        let url = URL(string: urlStr)
-        var request = URLRequest(url: url!)
+        guard let url = URL(string: urlStr) else {
+            print("🕸️網址錯誤")
+            return
+        }
+        var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("Bearer keyy7QrfYj3mhT9pM", forHTTPHeaderField: "Authorization")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
         let id = createdID()
-        let confirmOrder = OrderData.Record.Fields(buyer: orderName, drinkName: menuDatas.fields.name, size: size, sugar: sugar, temperature: temp, toppings: topping, pricePerCup: totalPrice, numberOfCups: numberOfCup, createdID: id)
+        let confirmOrder = OrderData.Record.Fields(buyer: orderName, drinkName: menuDatas!.fields.name, size: size, sugar: sugar, temperature: temp, toppings: topping, pricePerCup: totalPrice, numberOfCups: numberOfCup, createdID: id)
         let record = OrderData.Record(id: nil, fields: confirmOrder)
         let order = OrderData(records: [record])
         
@@ -146,21 +166,29 @@ class OrderTableViewController: UITableViewController {
         let postData = jasonString!.data(using: .utf8)
         request.httpBody = postData
         
+        // 使用URLSession建立網路連線
         URLSession.shared.dataTask(with: request) { data, response, error in
-            if let data = data {
+            // 先判斷是否有error
+            if let error = error {
+                print("😡\(error)")
+            }else if let data = data {
                 do {
                     let decoder = JSONDecoder()
-                    let order = try decoder.decode(OrderData.self, from: data)
+                    let orderResponse = try decoder.decode(OrderData.self, from: data)
                     let content = String(data: data, encoding: .utf8)
-                    print("🧋\(order)")
+                    print("🧋\(orderResponse)")
                     print("✅ \(content ?? "")")
                     DispatchQueue.main.async { //  在使用者按下送出訂單後加入array中
                         MenuController.shared.order.orders.append(record)
                         print("📝訂單 \(record)")
                     }
                 } catch {
-                    print("😡\(error.localizedDescription)")
+                    print("😡 JSON Error\(error.localizedDescription)")
                 }
+            }
+            //檢查 status code
+            if let httpResponse = response as? HTTPURLResponse, error == nil {
+                print("HTTP response status code: \(httpResponse.statusCode)")
             }
         }.resume()
         

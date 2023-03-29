@@ -11,7 +11,7 @@ import UIKit
 extension OrderTableViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing (_ textField: UITextField) {
         textField.becomeFirstResponder()
-        self.setPickerView(selectAt: textField)
+        self.setPickerView(select: textField)
         
     }
     
@@ -21,7 +21,7 @@ extension OrderTableViewController: UITextFieldDelegate {
         return true
     }
     
-    public func setPickerView(selectAt sender: UITextField){
+    public func setPickerView(select sender: UITextField){
         switch sender {
         case tempTextField:
             pickerView.tag = 0

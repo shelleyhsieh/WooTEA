@@ -19,7 +19,7 @@ class CheckoutTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        NotificationCenter.default.addObserver(tableView!, selector: #selector(UITableView.reloadData), name: MenuController.orderUpdateNotification, object: nil)
+        NotificationCenter.default.addObserver(Self.self, selector: #selector(UITableView.reloadData), name: MenuController.orderUpdateNotification, object: nil)
     
     }
     
@@ -32,6 +32,11 @@ class CheckoutTableViewController: UITableViewController {
                 print (error)
             }
         }
+    }
+    
+    //有註冊Observer，就要移除oberver，移除時機就是畫面消失時
+    override func viewDidDisappear(_ animated: Bool) {
+        NotificationCenter.default.removeObserver(self)
     }
 // MARK: - fetch orderList 
     func updateUI(with orderList: [OrderData.Record]) {
@@ -67,8 +72,11 @@ class CheckoutTableViewController: UITableViewController {
     // 刪除訂單 https://api.airtable.com/v0/{baseId}/{tableIdOrName}/{recordId}
     func deleteOrderData(urlStr: String, completion: @escaping (Result< Bool, Error >) -> Void) {
        
-        let url = URL(string: urlStr)
-        var request = URLRequest(url: url!)
+        guard let url = URL(string: urlStr) else {
+            print("🕸️網址錯誤")
+            return
+        }
+        var request = URLRequest(url: url)
         request.httpMethod = "DELETE"
         request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -82,21 +90,25 @@ class CheckoutTableViewController: UITableViewController {
         request.httpBody = postData
         
         URLSession.shared.dataTask(with: request) { data, response, error in
-            if let data = data {
+            // 先判斷是否有error
+            if let error = error {
+                print("😡\(error)")
+            } else if let data = data {
                 let status = String(data: data, encoding: .utf8)
                 print("✂️\(status ?? "")")
                 do {
                     let decoder = JSONDecoder()
-                    let orderList = try decoder.decode(DeleteOrder.self, from: data)
-                    print("✅\(orderList)")
+                    let deleteOrderResponse = try decoder.decode(DeleteOrder.self, from: data)
+                    print("✅\(deleteOrderResponse)")
                     completion(.success(true))
                     
                 } catch  {
-                    print("🥺\(error.localizedDescription)")
+                    print("🥺 JSON ERROR")
                     completion(.failure(error))
                 }
             
             }
+            //檢查 status code
             if let httpResponse = response as? HTTPURLResponse, error == nil {
                 print("HTTP response status code: \(httpResponse.statusCode)")
             }
@@ -136,11 +148,13 @@ class CheckoutTableViewController: UITableViewController {
         cell.totalCupsLable.text = "共  \(orderData.fields.numberOfCups)  杯"
         cell.totalPriceLable.text = "$ \(orderData.fields.pricePerCup * orderData.fields.numberOfCups)"
         
-        tableView.rowHeight = 140
+//        tableView.rowHeight = 140
 
         return cell
     }
-    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 140
+    }
 
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

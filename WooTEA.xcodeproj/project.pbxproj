@@ -27,6 +27,8 @@
 		D941DDEA298FE41100E21BE7 /* UIPickerView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D941DDE9298FE41100E21BE7 /* UIPickerView+Extension.swift */; };
 		D988A28F299A465F00724D20 /* DeleteOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D988A28E299A465F00724D20 /* DeleteOrder.swift */; };
 		D9892CD7298D5019002E7277 /* Decode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9892CD6298D5019002E7277 /* Decode.swift */; };
+		D99AE6E329B750B50062EB9C /* FacebookLogin in Frameworks */ = {isa = PBXBuildFile; productRef = D99AE6E229B750B50062EB9C /* FacebookLogin */; };
+		D99AE6E529B754100062EB9C /* FBEnterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99AE6E429B754100062EB9C /* FBEnterViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +54,8 @@
 		D941DDE9298FE41100E21BE7 /* UIPickerView+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIPickerView+Extension.swift"; sourceTree = "<group>"; };
 		D988A28E299A465F00724D20 /* DeleteOrder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteOrder.swift; sourceTree = SOURCE_ROOT; };
 		D9892CD6298D5019002E7277 /* Decode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Decode.swift; sourceTree = SOURCE_ROOT; };
+		D99AE6E029B74C340062EB9C /* WooTEA.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WooTEA.entitlements; sourceTree = "<group>"; };
+		D99AE6E429B754100062EB9C /* FBEnterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FBEnterViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +63,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D99AE6E329B750B50062EB9C /* FacebookLogin in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -84,6 +89,7 @@
 		D910456629890A3D008F272D /* WooTEA */ = {
 			isa = PBXGroup;
 			children = (
+				D99AE6E029B74C340062EB9C /* WooTEA.entitlements */,
 				D9104585298A463E008F272D /* Model */,
 				D9104586298A464C008F272D /* Views */,
 				D9104587298A4657008F272D /* Controller */,
@@ -124,6 +130,7 @@
 		D9104587298A4657008F272D /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				D99AE6E429B754100062EB9C /* FBEnterViewController.swift */,
 				D90F1454298E8F0900D15EF8 /* MenuController.swift */,
 				D9104581298A455A008F272D /* MenuViewController.swift */,
 				D910458A298A4703008F272D /* OrderTableViewController.swift */,
@@ -157,6 +164,9 @@
 			dependencies = (
 			);
 			name = WooTEA;
+			packageProductDependencies = (
+				D99AE6E229B750B50062EB9C /* FacebookLogin */,
+			);
 			productName = WooTEA;
 			productReference = D910456429890A3D008F272D /* WooTEA.app */;
 			productType = "com.apple.product-type.application";
@@ -185,6 +195,9 @@
 				Base,
 			);
 			mainGroup = D910455B29890A3D008F272D;
+			packageReferences = (
+				D99AE6E129B750B50062EB9C /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */,
+			);
 			productRefGroup = D910456529890A3D008F272D /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -225,6 +238,7 @@
 				D90F1455298E8F0900D15EF8 /* MenuController.swift in Sources */,
 				D910456A29890A3D008F272D /* SceneDelegate.swift in Sources */,
 				D988A28F299A465F00724D20 /* DeleteOrder.swift in Sources */,
+				D99AE6E529B754100062EB9C /* FBEnterViewController.swift in Sources */,
 				D9892CD7298D5019002E7277 /* Decode.swift in Sources */,
 				D9104584298A4618008F272D /* CheckoutTableViewController.swift in Sources */,
 				D9104593298A48C1008F272D /* CheckoutTableViewCell.swift in Sources */,
@@ -373,6 +387,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = WooTEA/WooTEA.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = J79C4AJ58Q;
@@ -401,6 +416,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = WooTEA/WooTEA.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = J79C4AJ58Q;
@@ -446,6 +462,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		D99AE6E129B750B50062EB9C /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/facebook/facebook-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 13.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D99AE6E229B750B50062EB9C /* FacebookLogin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D99AE6E129B750B50062EB9C /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
+			productName = FacebookLogin;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = D910455C29890A3D008F272D /* Project object */;
 }
